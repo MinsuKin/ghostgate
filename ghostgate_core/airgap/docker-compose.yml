@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  ghostgate-ollama:
+    image: ollama/ollama:latest
+    container_name: ghostgate-airgap-ollama
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama_storage:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_HOST=0.0.0.0:11434
+    networks:
+      - ghostgate-airgap-net
+
+  ghostgate-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: ghostgate-airgap-ui
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ghostgate-ollama:11434
+      - WEBUI_AUTH=false
+      - ENABLE_SIGNUP=false
+    volumes:
+      - openwebui_storage:/app/backend/data
+    depends_on:
+      - ghostgate-ollama
+    networks:
+      - ghostgate-airgap-net
+
+networks:
+  ghostgate-airgap-net:
+    driver: bridge
+    # To enforce true physical air-gap isolation after model pull:
+    # internal: true
+
+volumes:
+  ollama_storage:
+  openwebui_storage:

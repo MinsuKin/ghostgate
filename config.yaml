@@ -1,0 +1,72 @@
+# GhostGate & RawHuman Core Configuration
+version: "1.0.0"
+
+proxy:
+  host: "127.0.0.1"
+  port: 8080
+  default_upstream: "https://api.openai.com"
+  timeout_seconds: 60.0
+  log_level: "INFO"
+  enable_stream_rehydration: true
+
+zdr_policy:
+  strict_mode: true
+  strip_telemetry_headers: true
+  enforce_ssl_verification: true
+  disallowed_endpoints:
+    - "/v1/fine_tuning"
+    - "/v1/audio/transcriptions"  # Often retained longer by providers unless enterprise
+  custom_headers:
+    X-GhostGate-Version: "1.0.0"
+    X-Zero-Data-Retention-Enforced: "true"
+
+airgap:
+  auto_fallback_enabled: true
+  local_upstream: "http://127.0.0.1:11434"
+  airgap_triggers:
+    - "# @airgap"
+    - "# @top-secret"
+    - "BEGIN RSA PRIVATE KEY"
+    - "BEGIN OPENSSH PRIVATE KEY"
+
+redactor:
+  entropy_threshold: 3.8
+  min_entropy_length: 16
+  replacement_format: "[GHOST_REDACTED_{category}_{id}]"
+  active_rules:
+    - category: "AWS_ACCESS_KEY"
+      pattern: '\b(?:AKIA|ASIA|ABIA|ACCA)[A-Z0-9]{16}\b'
+      entropy_check: false
+    - category: "AWS_SECRET_KEY"
+      pattern: '(?<![A-Za-z0-9/])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])'
+      entropy_check: true
+    - category: "OPENAI_API_KEY"
+      pattern: 'sk-[A-Za-z0-9-_]{20,}'
+      entropy_check: false
+    - category: "ANTHROPIC_API_KEY"
+      pattern: 'sk-ant-[A-Za-z0-9-_]{20,}'
+      entropy_check: false
+    - category: "GENERIC_BEARER_TOKEN"
+      pattern: 'Bearer\s+([A-Za-z0-9\-._~+/]+=*)'
+      entropy_check: false
+    - category: "DATABASE_CONNECTION_STRING"
+      pattern: '(?:postgres|postgresql|mysql|mongodb|redis):\/\/[^\s"'\''<>]+'
+      entropy_check: false
+    - category: "EMAIL_ADDRESS"
+      pattern: '\b[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}\b'
+      entropy_check: false
+    - category: "IPV4_ADDRESS"
+      pattern: '\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
+      entropy_check: false
+    - category: "PHONE_NUMBER"
+      pattern: '\b(?:\+?\d{1,3}[-.\s]?)?\(?\d{2,4}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}\b'
+      entropy_check: false
+
+rawhuman:
+  host: "127.0.0.1"
+  port: 8081
+  tremor_band_hz: [8.0, 12.0]
+  min_motion_samples: 8
+  fitts_law_threshold: 0.65
+  synthetic_flag_blocking: true
+  human_confidence_threshold: 0.70

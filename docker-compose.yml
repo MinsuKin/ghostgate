@@ -1,0 +1,109 @@
+services:
+  ghostgate-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ghostgate-proxy
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - GHOSTGATE_HOST=0.0.0.0
+      - GHOSTGATE_PORT=8080
+      - GHOSTGATE_DEFAULT_UPSTREAM=http://mock-upstream:9000
+      - GHOSTGATE_LOCAL_UPSTREAM=http://ghostgate-ollama:11434
+    depends_on:
+      mock-upstream:
+        condition: service_healthy
+      ghostgate-ollama:
+        condition: service_healthy
+    networks:
+      - ghostgate-net
+
+  rawhuman-sentinel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rawhuman-sentinel
+    command: ["python", "-m", "rawhuman_engine.server"]
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - RAWHUMAN_HOST=0.0.0.0
+      - RAWHUMAN_PORT=8081
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
+    networks:
+      - ghostgate-net
+
+  mock-upstream:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ghostgate-mock-upstream
+    command: ["python", "-m", "tests.mock_upstream"]
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    environment:
+      - MOCK_UPSTREAM_HOST=0.0.0.0
+      - MOCK_UPSTREAM_PORT=9000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
+    networks:
+      - ghostgate-net
+
+  ghostgate-ollama:
+    image: ollama/ollama:latest
+    container_name: ghostgate-airgap-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_storage:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_HOST=0.0.0.0:11434
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - ghostgate-net
+
+  ghostgate-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: ghostgate-airgap-ui
+    restart: unless-stopped
+    profiles: ["ui"]
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ghostgate-ollama:11434
+      - WEBUI_AUTH=false
+      - ENABLE_SIGNUP=false
+    volumes:
+      - openwebui_storage:/app/backend/data
+    depends_on:
+      - ghostgate-ollama
+    networks:
+      - ghostgate-net
+
+networks:
+  ghostgate-net:
+    driver: bridge
+
+volumes:
+  ollama_storage:
+  openwebui_storage:
