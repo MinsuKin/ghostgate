@@ -74,3 +74,18 @@ On Linux systems:
 - **Zero Disk Persistence (ZDR):** GhostGate stores **zero** prompts, responses, or secret mappings on persistent storage. All synthetic shadowing dictionaries reside solely in RAM, scoped to the individual HTTP transaction, and are purged immediately after the stream closes.
 - **Format-Preserving Entropy Engine:** Shadows are generated using high-entropy random generation matching the exact entropy, length, and character space of the target credential (e.g. AWS `AKIA[0-9A-Z]{16}`).
 - **Local Air-Gap Isolation:** Sensitive prompts tagged with `# @airgap` or matching classification rules are routed to offline, containerized models (e.g., Ollama) with external network egress disabled.
+
+---
+
+## 🧪 Empirical Evaluation & Attack Corpus
+
+To empirically test detection efficacy, GhostGate maintains a structured evaluation corpus in [`tests/corpus/`](tests/corpus/):
+- `secrets_leakage_corpus.json`: Ground-truth test suite containing 22+ multi-cloud credentials, API keys, database connection strings, and negative controls.
+- `synthetic_agent_corpus.json`: Trajectory datasets comparing programmatic automation tools (linear moves, cubic Bezier splines) against authentic human reaching movements.
+- `adversarial_prompts_corpus.json`: Adversarial evasion prompts including direct instruction overrides and base64 obfuscation requests.
+
+Run the evaluation suite locally:
+```bash
+pytest tests/test_attack_corpus.py -v
+```
+

@@ -1,4 +1,4 @@
-.PHONY: help install run-proxy run-rawhuman demo test test-e2e docker-up docker-down prod-ready clean
+.PHONY: help install run-proxy run-rawhuman demo test test-e2e bench docker-up docker-down prod-ready clean
 
 help:
 	@echo "GhostGate & RawHuman CLI Management:"
@@ -6,8 +6,9 @@ help:
 	@echo "  make run-proxy     - Launch GhostGate AI Privacy Proxy (Port 8080)"
 	@echo "  make run-rawhuman  - Launch RawHuman I/O Attestation Server (Port 8081)"
 	@echo "  make demo          - Run RawHuman interactive terminal demonstration"
-	@echo "  make test          - Run unit and integration test suite"
+	@echo "  make test          - Run unit, corpus, and integration test suite"
 	@echo "  make test-e2e      - Execute full live End-to-End integration test suite"
+	@echo "  make bench         - Execute statistical P50/P90/P99 latency & memory benchmark suite"
 	@echo "  make docker-up     - Launch full containerized production stack in Docker"
 	@echo "  make docker-down   - Stop and tear down containerized stack"
 	@echo "  make prod-ready    - Validate complete production readiness & run all tests"
@@ -31,6 +32,9 @@ test:
 
 test-e2e:
 	. .venv/bin/activate && python -m pytest tests/test_e2e_live.py -v -s
+
+bench:
+	. .venv/bin/activate && python -m benchmarks.run_benchmarks
 
 docker-up:
 	docker compose up -d

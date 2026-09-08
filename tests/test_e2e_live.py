@@ -99,7 +99,7 @@ def test_e2e_zero_leakage_and_format_preserving_rehydration():
     assert "SuperSecretPass123" in assistant_reply, "Rehydration failed: DB password not restored!"
     assert "prod-cluster.internal" in assistant_reply, "Rehydration failed: DB domain not restored!"
 
-    console.print("[bold green]✔ E2E Test 1 Passed: Zero Egress Leak + Format-Preserving Rehydration Verified![/bold green]")
+    console.print("[bold green]✔ E2E Test 1 Passed: Format-Preserving Secret Masking & Rehydration Verified![/bold green]")
 
 
 def test_e2e_streaming_sse_rehydration():
@@ -186,7 +186,7 @@ def test_e2e_airgap_local_routing_isolation():
     count_after = inspect_after.get("total_count", 0)
 
     assert count_after == count_before, "AIRGAP LEAK: Request was sent to cloud upstream instead of isolated local!"
-    console.print("[bold green]✔ E2E Test 4 Passed: 100% Air-Gap Local Isolation Verified![/bold green]")
+    console.print("[bold green]✔ E2E Test 4 Passed: Deterministic Air-Gap Local Isolation Verified![/bold green]")
 
 
 def test_e2e_rawhuman_daemon_verification():

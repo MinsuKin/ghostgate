@@ -1,0 +1,64 @@
+[
+  {
+    "id": "pyautogui-linear-bot",
+    "generator": "PyAutoGUI linear interpolation",
+    "is_synthetic": true,
+    "os_flag": 1,
+    "description": "Robotic linear move between (100, 100) and (800, 600) with uniform 20ms delays",
+    "points": [
+      {"x": 100.0, "y": 100.0, "timestamp": 1000.000},
+      {"x": 170.0, "y": 150.0, "timestamp": 1000.020},
+      {"x": 240.0, "y": 200.0, "timestamp": 1000.040},
+      {"x": 310.0, "y": 250.0, "timestamp": 1000.060},
+      {"x": 380.0, "y": 300.0, "timestamp": 1000.080},
+      {"x": 450.0, "y": 350.0, "timestamp": 1000.100},
+      {"x": 520.0, "y": 400.0, "timestamp": 1000.120},
+      {"x": 590.0, "y": 450.0, "timestamp": 1000.140},
+      {"x": 660.0, "y": 500.0, "timestamp": 1000.160},
+      {"x": 730.0, "y": 550.0, "timestamp": 1000.180},
+      {"x": 800.0, "y": 600.0, "timestamp": 1000.200}
+    ]
+  },
+  {
+    "id": "bezier-easing-bot",
+    "generator": "Cubic Bezier curve without human micro-variations",
+    "is_synthetic": true,
+    "os_flag": 1,
+    "description": "Smooth robotic easing with strictly monotonic angle changes and fixed timer tick",
+    "points": [
+      {"x": 50.0, "y": 50.0, "timestamp": 2000.000},
+      {"x": 95.0, "y": 72.0, "timestamp": 2000.016},
+      {"x": 160.0, "y": 115.0, "timestamp": 2000.032},
+      {"x": 250.0, "y": 180.0, "timestamp": 2000.048},
+      {"x": 360.0, "y": 260.0, "timestamp": 2000.064},
+      {"x": 480.0, "y": 345.0, "timestamp": 2000.080},
+      {"x": 595.0, "y": 420.0, "timestamp": 2000.096},
+      {"x": 690.0, "y": 475.0, "timestamp": 2000.112},
+      {"x": 755.0, "y": 510.0, "timestamp": 2000.128},
+      {"x": 790.0, "y": 525.0, "timestamp": 2000.144},
+      {"x": 800.0, "y": 530.0, "timestamp": 2000.160}
+    ]
+  },
+  {
+    "id": "human-mouse-reach-01",
+    "generator": "Physical USB Optical Mouse reaching for button",
+    "is_synthetic": false,
+    "os_flag": 0,
+    "description": "Organic movement with ballistic acceleration, non-zero curvature entropy, and timer jitter",
+    "points": [
+      {"x": 120.0, "y": 350.0, "timestamp": 3000.000},
+      {"x": 155.2, "y": 362.8, "timestamp": 3000.018},
+      {"x": 210.6, "y": 382.1, "timestamp": 3000.035},
+      {"x": 288.4, "y": 412.5, "timestamp": 3000.051},
+      {"x": 389.1, "y": 454.9, "timestamp": 3000.066},
+      {"x": 505.7, "y": 508.3, "timestamp": 3000.080},
+      {"x": 628.3, "y": 568.1, "timestamp": 3000.097},
+      {"x": 742.9, "y": 627.4, "timestamp": 3000.115},
+      {"x": 836.5, "y": 677.2, "timestamp": 3000.136},
+      {"x": 905.1, "y": 711.6, "timestamp": 3000.160},
+      {"x": 948.8, "y": 728.9, "timestamp": 3000.189},
+      {"x": 971.2, "y": 734.5, "timestamp": 3000.222},
+      {"x": 980.0, "y": 735.0, "timestamp": 3000.258}
+    ]
+  }
+]
