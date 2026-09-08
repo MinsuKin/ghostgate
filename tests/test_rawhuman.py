@@ -44,4 +44,6 @@ def test_biomechanical_human_verification():
     assert report.is_human is True
     assert report.human_confidence >= 0.60
     assert report.fitts_law_fit >= 0.40
-    assert report.tremor_energy_score >= 0.30
+    assert report.curvature_entropy_score >= 0.20
+    assert report.timing_jitter_entropy >= 0.20
+    assert report.tremor_energy_score >= 0.20

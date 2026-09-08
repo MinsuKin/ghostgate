@@ -28,7 +28,7 @@ def render_banner():
     banner.append("   ██║  ██║██║  ██║╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║ ╚████║\n", style="bold cyan")
     banner.append("   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝\n", style="bold cyan")
     banner.append("       Kernel & I/O-Level Proof-of-Human Defense Against Multimodal AI Agents\n", style="bold white")
-    banner.append("       Patent-Pending Biomechanical Tremor & Synthetic Event Interceptor\n", style="dim green")
+    banner.append("       Kinematic Trajectory Dynamics & Synthetic Event Interceptor\n", style="dim green")
     console.print(Panel(banner, border_style="cyan"))
 
 
@@ -68,9 +68,9 @@ def run_simulation_case(scenario_name: str, is_bot: bool):
     ballistic_verdict = "[bold green]PASS[/bold green]" if report.fitts_law_fit >= 0.4 else "[bold red]FAIL (Unnatural)[/bold red]"
     table.add_row("Fitts's Law Ballistic Fit", f"{report.fitts_law_fit * 100:.1f}%", ">= 40.0%", ballistic_verdict)
 
-    # Tremor
-    tremor_verdict = "[bold green]PASS[/bold green]" if report.tremor_energy_score >= 0.3 else "[bold red]FAIL (Zero Tremor)[/bold red]"
-    table.add_row("8-12Hz Neuromuscular Tremor", f"{report.tremor_energy_score * 100:.1f}%", ">= 30.0%", tremor_verdict)
+    # Curvature Entropy
+    entropy_verdict = "[bold green]PASS[/bold green]" if report.curvature_entropy_score >= 0.2 else "[bold red]FAIL (Zero Curvature Entropy)[/bold red]"
+    table.add_row("Kinematic Curvature Entropy", f"{report.curvature_entropy_score * 100:.1f}%", ">= 20.0%", entropy_verdict)
 
     # Timing Jitter
     jitter_verdict = "[bold green]PASS[/bold green]" if report.timing_jitter_entropy >= 0.25 else "[bold red]FAIL (Flat Clock)[/bold red]"

@@ -43,6 +43,7 @@ class AttestationResponse(BaseModel):
     is_synthetic_injection: bool
     platform_flag: Optional[str]
     fitts_law_fit: float
+    curvature_entropy_score: float
     tremor_energy_score: float
     timing_jitter_entropy: float
     sample_count: int
