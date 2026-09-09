@@ -24,3 +24,6 @@ ghostgate = "ghostgate_core.cli:main"
 ghostgate-proxy = "ghostgate_core.proxy:main"
 rawhuman = "rawhuman_engine.server:main"
 rawhuman-demo = "rawhuman_engine.demo_cli:main"
+
+[tool.vercel]
+entrypoint = "ghostgate_core.proxy:app"

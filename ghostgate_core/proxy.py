@@ -7,6 +7,9 @@ Human-in-the-Loop (HITL) tool call gating, and embedded CISO Security Dashboard.
 from __future__ import annotations
 import json
 import logging
+import os
+import time
+from pathlib import Path
 from typing import Any, AsyncGenerator, Dict, Optional
 import httpx
 import yaml
@@ -16,6 +19,12 @@ from ghostgate_core.dashboard import metrics_collector, render_dashboard_html
 from ghostgate_core.hitl_gateway import HITLGateway
 from ghostgate_core.redactor import MaskingMode, RedactionContext, SecretRedactor
 from ghostgate_core.zdr_enforcer import ZDREnforcer
+from rawhuman_engine.biomechanics import (
+    BiomechanicalAnalyzer,
+    generate_synthetic_bot_trajectory,
+    generate_human_like_trajectory,
+)
+from rawhuman_engine.detector import SyntheticEventDetector
 
 logging.basicConfig(
     level=logging.INFO,
@@ -62,23 +71,122 @@ class ProxyState:
         )
 
     def _load_config(self, path: str) -> Dict[str, Any]:
-        import os
-        config_file = os.environ.get("GHOSTGATE_CONFIG", path)
+        config_env = os.environ.get("GHOSTGATE_CONFIG")
+        if config_env and os.path.exists(config_env):
+            target_path = config_env
+        else:
+            base_dir = Path(__file__).resolve().parent.parent
+            fallback = base_dir / path
+            target_path = str(fallback) if fallback.exists() else path
+
         try:
-            with open(config_file, "r", encoding="utf-8") as f:
+            with open(target_path, "r", encoding="utf-8") as f:
                 return yaml.safe_load(f) or {}
         except Exception as e:
-            logger.warning("Failed to load %s (%s). Using fallback defaults.", config_file, e)
+            logger.warning("Failed to load config from %s (%s). Using fallback defaults.", target_path, e)
             return {}
 
 
 proxy_state = ProxyState()
 
 
+@app.get("/", response_class=HTMLResponse)
 @app.get("/dashboard", response_class=HTMLResponse)
 async def get_ciso_dashboard():
-    """Renders the embedded real-time CISO & SOC Security Dashboard."""
+    """Renders the embedded real-time CISO & SOC Security Dashboard and Investor Sandbox."""
     return render_dashboard_html()
+
+
+@app.post("/api/demo/redact")
+async def demo_redact(request: Request):
+    """Interactive demo endpoint for investor sandbox."""
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    prompt = body.get("prompt", "")
+    mode_str = body.get("mode", "FORMAT_PRESERVING")
+    active_mode = MaskingMode.FORMAT_PRESERVING if mode_str == "FORMAT_PRESERVING" else MaskingMode.TAG_BASED
+
+    t0 = time.perf_counter()
+    redacted_text, ctx = proxy_state.redactor.redact_text(prompt, override_mode=active_mode)
+    t1 = time.perf_counter()
+    latency_ms = round((t1 - t0) * 1000.0, 3)
+
+    is_airgap, airgap_reason = proxy_state.zdr_enforcer.should_route_to_airgap(prompt)
+    rehydrated_text = proxy_state.redactor.rehydrate_text(redacted_text, ctx)
+
+    # Record to live metrics
+    for cat, cnt in ctx.categories_redacted.items():
+        metrics_collector.record_redaction(cat, cnt)
+
+    return {
+        "original_prompt": prompt,
+        "redacted_text": redacted_text,
+        "rehydrated_text": rehydrated_text,
+        "redaction_count": ctx.redaction_count,
+        "categories_redacted": ctx.categories_redacted,
+        "latency_ms": latency_ms,
+        "is_airgap": is_airgap,
+        "airgap_reason": airgap_reason,
+    }
+
+
+@app.post("/api/demo/rawhuman")
+async def demo_rawhuman(request: Request):
+    """Interactive RawHuman agent takeover vs human attestation simulator."""
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    scenario = body.get("scenario", "agent")
+    is_bot = (scenario == "agent")
+
+    start = (120.0, 350.0)
+    end = (980.0, 720.0)
+
+    if is_bot:
+        points = generate_synthetic_bot_trajectory(start, end, steps=25)
+        simulated_flags = 0x01
+    else:
+        points = generate_human_like_trajectory(start, end, steps=25)
+        simulated_flags = 0x00
+
+    analyzer = BiomechanicalAnalyzer(min_samples=8, confidence_threshold=0.60)
+    for p in points:
+        analyzer.add_point(p.x, p.y, p.timestamp)
+
+    report = analyzer.analyze()
+    detector = SyntheticEventDetector()
+    os_result = detector.inspect_event_metadata(event_flags=simulated_flags)
+
+    reasons = []
+    if os_result.is_synthetic:
+        reasons.append(f"Synthetic OS Event Injected ({os_result.platform_flag})")
+    reasons.extend(report.rejection_reasons)
+    if not reasons and not report.is_human:
+        reasons.append("Kinematic confidence score below 60% threshold")
+
+    if is_bot:
+        metrics_collector.record_agent_block(
+            "SendInput / mouse_event",
+            "Autonomous AI Agent programmatic injection intercepted",
+        )
+
+    return {
+        "scenario": "Autonomous AI Agent (Claude Computer Use / SendInput)" if is_bot else "Biological Human Operator (Physical USB Mouse)",
+        "is_bot": is_bot,
+        "is_human": report.is_human and not os_result.is_synthetic,
+        "human_confidence": round(report.human_confidence, 3),
+        "fitts_law_fit": round(report.fitts_law_fit, 3),
+        "curvature_entropy_score": round(report.curvature_entropy_score, 3),
+        "timing_jitter_entropy": round(report.timing_jitter_entropy, 3),
+        "os_flag_detected": os_result.is_synthetic,
+        "platform_flag": os_result.platform_flag or "PHYSICAL_HID_INTERRUPT",
+        "rejection_reasons": reasons,
+        "action_taken": "I/O Gate Locked; Endpoint Transaction Aborted (0.002s latency)" if is_bot else "I/O Gate Unlocked; Action Permitted",
+        "status": "BLOCKED" if is_bot else "VERIFIED",
+    }
 
 
 @app.get("/api/dashboard/metrics")

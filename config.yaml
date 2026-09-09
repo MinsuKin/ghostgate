@@ -50,7 +50,8 @@ redactor:
       pattern: 'Bearer\s+([A-Za-z0-9\-._~+/]+=*)'
       entropy_check: false
     - category: "DATABASE_CONNECTION_STRING"
-      pattern: '(?:postgres|postgresql|mysql|mongodb|redis):\/\/[^\s"'\''<>]+'
+      pattern: >-
+        (?:postgres|postgresql|mysql|mongodb|redis):\/\/[^\s"'<>]+
       entropy_check: false
     - category: "EMAIL_ADDRESS"
       pattern: '\b[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}\b'

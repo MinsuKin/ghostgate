@@ -76,3 +76,44 @@ def test_airgap_trigger_detection():
     route, trigger = enforcer.should_route_to_airgap(payload_secret)
     assert route is True
     assert trigger == "# @top-secret"
+
+
+@pytest.mark.asyncio
+async def test_interactive_sandbox_endpoints():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://testserver") as client:
+        # 1. Root / serves the interactive dashboard
+        root_resp = await client.get("/")
+        assert root_resp.status_code == 200
+        assert "text/html" in root_resp.headers.get("content-type", "")
+        assert "GHOSTGATE" in root_resp.text
+        assert "AI Privacy Playground" in root_resp.text
+
+        # 2. Interactive Redact Demo API
+        redact_resp = await client.post(
+            "/api/demo/redact",
+            json={"prompt": "Check AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE now", "mode": "FORMAT_PRESERVING"}
+        )
+        assert redact_resp.status_code == 200
+        redact_data = redact_resp.json()
+        assert redact_data["redaction_count"] == 1
+        assert "AKIAIOSFODNN7EXAMPLE" not in redact_data["redacted_text"]
+        assert "AKIAIOSFODNN7EXAMPLE" in redact_data["rehydrated_text"]
+        assert redact_data["latency_ms"] >= 0.0
+
+        # 3. Interactive RawHuman Agent Simulator API (Agent scenario)
+        bot_resp = await client.post("/api/demo/rawhuman", json={"scenario": "agent"})
+        assert bot_resp.status_code == 200
+        bot_data = bot_resp.json()
+        assert bot_data["is_bot"] is True
+        assert bot_data["status"] == "BLOCKED"
+        assert bot_data["os_flag_detected"] is True
+
+        # 4. Interactive RawHuman Agent Simulator API (Human scenario)
+        human_resp = await client.post("/api/demo/rawhuman", json={"scenario": "human"})
+        assert human_resp.status_code == 200
+        human_data = human_resp.json()
+        assert human_data["is_human"] is True
+        assert human_data["status"] == "VERIFIED"
+        assert human_data["os_flag_detected"] is False
+
