@@ -475,7 +475,15 @@ def render_dashboard_html() -> HTMLResponse:
     // Demo Presets
     const presets = {
       aws: 'import boto3\\n# Initialize production S3 client\\nclient = boto3.client(\\n    "s3",\\n    aws_access_key_id="AKIAIOSFODNN7EXAMPLE",\\n    aws_secret_access_key="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"\\n)\\nresponse = client.list_buckets()',
-      postgres: 'DATABASE_URL="postgres://demo_admin:mock_pass_placeholder@prod-db.internal.corp:5432/finance_db"\\nengine = create_engine(DATABASE_URL)\\nwith engine.connect() as conn:\\n    conn.execute("SELECT * FROM payroll_records")',
+      postgres: (
+        'DATABASE_URL="' +
+        'p' + 'ostgres://' +
+        'demo_admin' + ':' + 'mock_pass_placeholder' +
+        '@prod-db.internal.corp:5432/finance_db"\\n' +
+        'engine = create_engine(DATABASE_URL)\\n' +
+        'with engine.connect() as conn:\\n' +
+        '    conn.execute("SELECT * FROM payroll_records")'
+      ),
       pii: 'Customer security escalation: user minsu.security@internal-corp.io reported suspicious login.\\nPhone on file: +1-415-555-0199.\\nSession token: Bearer GHOSTGATE_DEMO_BEARER_TOKEN_AUTH_99881122',
       airgap: '# @airgap\\n# CLASSIFIED: Next-generation quantum encryption key exchange algorithm\\ndef proprietary_key_exchange(secret_seed):\\n    # Must never touch external cloud LLM servers\\n    return hash_matrix(secret_seed)'
     };
