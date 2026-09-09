@@ -1,8 +1,8 @@
 <p align="center">
-  <h1 align="center">🛡️ GHOSTGATE</h1>
+  <h1 align="center">🛡️ RAWHUMAN <small>by GhostGate</small></h1>
   <p align="center">
-    <strong>The Invisible Bulletproof Glass for Enterprise AI</strong><br>
-    <em>Zero-Trust Data Leak Protection • Format-Preserving Secret Masking • Autonomous AI Agent Takeover Defense</em>
+    <strong>The First I/O-Level Defense Against Multimodal Autonomous AI Agents</strong><br>
+    <em>CAPTCHA is Dead in the Browser • Layer 0 Hardware & Kinematic Attestation • HITL Secure Execution Gateway</em>
   </p>
   <p align="center">
     <a href="https://ghostgate-beta.vercel.app/" target="_blank"><img src="https://img.shields.io/badge/LIVE%20DEMO-ghostgate--beta.vercel.app-6366F1?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Interactive Sandbox"></a>
@@ -12,58 +12,58 @@
     <img src="https://img.shields.io/badge/python-3.10%2B-brightgreen.svg" alt="Python 3.10+">
     <img src="https://img.shields.io/badge/docker-ready-2496ED.svg" alt="Docker Ready">
     <img src="https://img.shields.io/badge/tests-28%20passed-success.svg" alt="Tests: 28 passed">
-    <img src="https://img.shields.io/badge/latency-%3C0.15ms-indigo.svg" alt="Latency: <0.15ms">
-    <img src="https://img.shields.io/badge/attack%20corpus-validated-brightgreen.svg" alt="Attack Corpus Validated">
+    <img src="https://img.shields.io/badge/layer0%20lockout-%3C0.002s-rose.svg" alt="Lockout: <0.002s">
+    <img src="https://img.shields.io/badge/format--preserving-%3C0.15ms-indigo.svg" alt="Latency: <0.15ms">
   </p>
 </p>
 
 ---
 
 > ### 🌐 Live Interactive Sandbox (No Install Required)
-> **Test GhostGate live directly in your browser:**  
+> **Experience the Layer 0 Agent Defense live in your browser:**  
 > 👉 **[https://ghostgate-beta.vercel.app/](https://ghostgate-beta.vercel.app/)**  
-> Test real-world corporate leak scenarios (Payroll Database Password, AWS Root Key, Customer PII) and experience 0.14ms format-preserving secret shadowing and autonomous AI agent takeover defense.
+> Test real-world rogue autonomous AI agent hijack simulations (SendInput bot vs physical human mouse) with live 0.002s lockout dials, and explore downstream 0.14ms format-preserving secret shadowing.
 
 ---
 
-## 🧭 Executive Summary: The $45B Enterprise AI Opportunity
+## 🧭 Executive Summary: Why CAPTCHA is Dead
 
-### 1. The Enterprise AI Dilemma
-Over **100 million enterprise knowledge workers** use generative AI tools (ChatGPT, Claude, Cursor, Copilot) every single day. In doing so, developers and employees routinely and accidentally paste **company database passwords, client emails, private keys, and cloud credentials** directly into third-party cloud prompts.
+### 1. The Death of Web CAPTCHA
+For twenty years, online bot protection (Google reCAPTCHA v2/v3, Cloudflare Turnstile) relied on code running inside the **browser's JavaScript DOM sandbox**—tracking DOM `mousemove` events, canvas fingerprints, and rendering challenge puzzles.
 
-* **78% of Fortune 500 CISOs** currently restrict or block generative AI tools due to catastrophic data breach liabilities and regulatory fines.
-* **$4.45 Million**: The average cost of a corporate data breach (IBM Cost of a Data Breach Report).
-* **The Emerging $50B Threat (Rogue Agent Hijack)**: Autonomous AI agents (such as OpenAI Operator and Anthropic Computer Use) physically control employee mice and keyboards. If an AI agent is tricked by a prompt injection attack, it can wipe corporate databases or approve unauthorized financial transfers without human consent.
+**Autonomous multimodal AI agents (Anthropic Claude 3.5 Computer Use, OpenAI Operator) broke this paradigm permanently:**
+* **Direct Desktop Pixel Inspection**: AI agents don't parse web DOM; they inspect the workstation's raw screen pixels via multimodal vision.
+* **OS-Level Input Injection**: Instead of dispatching JavaScript events, agents inject native operating system input interrupts (`SendInput` on Windows, Quartz Event Taps on macOS, `uinput` on Linux).
+* **DOM Blindness**: To browser JavaScript, these inputs appear indistinguishable from human activity, or the agent operates entirely outside the browser (in native terminal shells, IDEs, desktop databases).
+* **The Emerging Threat**: If a rogue agent is tricked by a prompt injection attack, it can physically click "Approve Transfer" or delete production databases with zero human oversight.
 
-### 2. The Solution: What GhostGate Does
-GhostGate sits invisibly on employee workstations between the user and cloud AI—acting as **digital bulletproof glass**:
+### 2. The Solution: RawHuman + GhostGate Architecture
+True proof-of-human can no longer exist at the application or web layer. **It must happen at Layer 0 (the OS Kernel and physical I/O interface):**
 
-1. ⚡ **0.14ms In-Flight Secret Shadowing**: Real database passwords, AWS keys, and PII are intercepted and swapped with harmless, format-preserving fake tokens (`AKIA...`, `postgres://mock_user...`) before leaving the laptop.
-2. 🔄 **Lossless In-Memory Rehydration**: When ChatGPT writes back the solution, GhostGate automatically swaps the real credentials back in-memory on the employee's screen. ChatGPT writes the code, but **never sees company secrets**.
-3. 🤖 **RawHuman™ Biomechanical Agent Barrier**: Inspects physical human hand micro-tremors and OS kernel injection flags (`LLMHF_INJECTED`) to block rogue autonomous AI bots from hijacking mice or keyboards in **under 0.002 seconds**.
+1. 🛡️ **RawHuman™ Layer 0 Sentinel**: Traps OS programmatic injection flags (`LLMHF_INJECTED = 0x01`), inspects physical USB HID controller hardware interrupts, and validates biological neuromuscular curvature entropy ($H \ge 0.20$) in **under 0.002 seconds**. Programmatic bot clicks are neutralized before they execute.
+2. ⚡ **GhostGate™ Secure HITL Execution Gateway**: Once human authenticity is attested at Layer 0, GhostGate intercepts high-risk tool calls (`bash`, `db_drop`) and performs **0.14ms format-preserving secret shadowing**, ensuring corporate credentials never leak to cloud LLMs.
+3. 🔄 **Lossless In-Memory Rehydration**: Restores authentic credentials in ephemeral memory on the developer's laptop, preserving 100% LLM coding productivity with zero leak risk.
 
 ---
 
-## 🎯 How It Works: The 3-Step Protection Flow
+## 🎯 How It Works: The Layer 0 Protection Flow
 
 | Step | Location | What Happens | Security Status |
 | :--- | :--- | :--- | :--- |
-| **1. Danger** | Developer Laptop | Employee pastes real payroll database password into ChatGPT. | 🚨 **Real Credential Leak Risk** |
-| **2. Intercept (0.14ms)** | GhostGate Workstation Proxy | Real secret swapped with format-preserving synthetic dummy token. | ⚡ **Swapped in Ephemeral RAM** |
-| **3. Zero Leak** | Cloud AI (OpenAI / Anthropic) | Cloud model receives harmless fake token; generates functioning code. | 🛡️ **0 Bytes Leaked to Cloud** |
-
-When the AI model returns refactored code via streaming SSE, GhostGate restores the original credential in-flight. The employee enjoys 100% AI productivity with **zero manual copy-pasting and zero leak liability**.
+| **1. Agent Action** | Workstation OS | Autonomous AI agent attempts mouse click / tool execution via `SendInput`. | 🚨 **Autonomous Bot Takeover Risk** |
+| **2. Layer 0 Trap (0.002s)** | RawHuman Engine | Detects OS injection flag (`LLMHF_INJECTED`) & flat non-tremor trajectory ($H < 0.20$). | ⚡ **I/O Bus Locked in 0.002s** |
+| **3. Secure Gateway** | GhostGate Proxy | Verified human actions proceed; secrets shadowed with format-preserving mock tokens. | 🛡️ **Zero Breach & Zero LLM Leak** |
 
 ---
 
-## 🏆 The 3 Unfair Competitive Moats (Why GhostGate Wins)
+## 🏆 The 3 Unfair Competitive Moats (Why RawHuman Wins)
 
-1. **Zero-Friction In-Line Proxy (Instant Enterprise Rollout)**  
-   No code refactoring, no proprietary SDKs, and no developer workflow friction. Works transparently as an in-line reverse proxy across macOS, Windows, and Linux workstations.
-2. **Format-Preserving AST Tokenization (No Broken AI Code)**  
-   Legacy DLP tools replace text with `[REDACTED]`, which corrupts Python syntax, breaks indentation, and causes severe LLM hallucinations. GhostGate generates syntax-valid dummy tokens of identical length and format, preserving 100% code generation accuracy.
-3. **RawHuman™ Layer 0 Biomechanical Sentinel**  
-   The world's first hardware/kinematic barrier stopping autonomous AI bots from hijacking employee PCs. Differentiates physical human motor curves and muscle tremor from programmatic bot injections (`SendInput`, `PyAutoGUI`) in 0.002s.
+1. **Layer 0 Hardware & OS Kernel Moat (The reCAPTCHA Killer)**  
+   Operates where browser JavaScript sandboxes cannot reach. Intercepts Win32 low-level hooks, macOS Quartz session state, and Linux physical `evdev` bus descriptors before synthetic inputs reach the application layer.
+2. **Neuromuscular Kinematic Biomechanics ($H \ge 0.20$)**  
+   Biological human hand motion strictly follows Fitts's Law, minimum-jerk curves, and micro-tremor timing jitter. Programmatic bots generate piecewise linear paths with discrete OS scheduler timing intervals, creating a deterministic mathematical separation.
+3. **In-Line HITL Execution & Format-Preserving Data Shield**  
+   Unlike dumb DLP filters that replace text with `[REDACTED]` (breaking code AST and hallucinating LLMs), GhostGate generates syntax-valid dummy tokens in 0.14ms with zero data retention (ZDR).
 
 ---
 

@@ -1,8 +1,9 @@
 """
 GhostGate Core: Executive CISO Dashboard & Zero-Background Investor Sandbox.
+Direction 1: RawHuman Hero (The I/O-Level reCAPTCHA Killer & HITL Security Gateway).
 Provides an intuitive, narrative-driven interactive web interface for investors,
-CISOs, and security evaluators to immediately experience real-time data leak protection,
-format-preserving synthetic shadowing, autonomous AI agent takeover defense, and live SOC telemetry.
+CISOs, and security evaluators to immediately experience autonomous AI agent takeover defense,
+Layer 0 proof-of-human attestation, format-preserving synthetic secret shadowing, and live SOC telemetry.
 """
 
 from __future__ import annotations
@@ -131,7 +132,7 @@ def render_dashboard_html() -> HTMLResponse:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GhostGate Labs // CISO Security Operations Center & Zero-Trust AI Privacy Shield</title>
+  <title>RAWHUMAN by GhostGate Labs // CISO Security Operations Center & I/O-Level Agent Defense</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -165,28 +166,29 @@ def render_dashboard_html() -> HTMLResponse:
   <header class="border-b border-slate-800/80 bg-[#0d1322]/90 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/25">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-rose-500 via-purple-500 to-indigo-500 flex items-center justify-center font-bold text-white shadow-lg shadow-rose-500/25">
           🛡️
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-extrabold text-xl tracking-wider text-white">GHOSTGATE</span>
-            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-bold tracking-wide">ENTERPRISE AI SHIELD</span>
+            <span class="font-extrabold text-xl tracking-wider text-white">RAWHUMAN</span>
+            <span class="text-xs text-slate-400 font-bold tracking-wide">by GHOSTGATE</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono font-bold tracking-wide">LAYER 0 AGENT DEFENSE</span>
           </div>
-          <p class="text-[11px] text-slate-400 hidden sm:block">Zero-Trust Bulletproof Glass Between Employees & Cloud AI</p>
+          <p class="text-[11px] text-slate-400 hidden sm:block">The I/O-Level reCAPTCHA Killer • Hardware & Kinematic Attestation</p>
         </div>
       </div>
       
       <!-- Center Navigation Tabs -->
       <nav class="hidden lg:flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800/80 text-xs font-medium">
-        <button onclick="switchTab('leak-defense')" id="tab-btn-leak-defense" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-bold transition shadow-sm">
+        <button onclick="switchTab('agent-defense')" id="tab-btn-agent-defense" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-bold transition shadow-sm">
+          🛡️ RawHuman Sentinel
+        </button>
+        <button onclick="switchTab('leak-defense')" id="tab-btn-leak-defense" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition font-medium">
           ⚡ AI Privacy Playground
         </button>
-        <button onclick="switchTab('agent-defense')" id="tab-btn-agent-defense" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition font-medium">
-          🤖 Rogue AI Agent Defense
-        </button>
         <button onclick="switchTab('vc-pitch')" id="tab-btn-vc-pitch" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition font-medium">
-          📈 VC Pitch & ROI Thesis
+          📈 VC Thesis: CAPTCHA is Dead
         </button>
         <button onclick="switchTab('soc-telemetry')" id="tab-btn-soc-telemetry" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition font-medium">
           📊 CISO SOC Telemetry
@@ -200,7 +202,7 @@ def render_dashboard_html() -> HTMLResponse:
       <div class="flex items-center space-x-3 text-xs">
         <span class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[11px] font-bold">
           <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          ZERO LEAK ACTIVE
+          LAYER 0 ACTIVE
         </span>
         <a href="https://github.com/MinsuKin/ghostgate" target="_blank" class="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-1.5 rounded-lg font-bold transition">
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -211,44 +213,47 @@ def render_dashboard_html() -> HTMLResponse:
   </header>
 
   <!-- EXECUTIVE HERO PITCH BANNER -->
-  <section class="border-b border-slate-800/60 bg-gradient-to-b from-[#11192e] to-[#0b0f19] py-8 px-4 sm:px-6">
+  <section class="border-b border-slate-800/60 bg-gradient-to-b from-[#161226] via-[#101426] to-[#0b0f19] py-8 px-4 sm:px-6">
     <div class="max-w-7xl mx-auto">
       <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
         <div class="max-w-3xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold mb-3">
-            <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>PROTECTION ACTIVE • 0.14ms INLINE OVERHEAD</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-bold mb-3">
+            <span class="h-2 w-2 rounded-full bg-rose-400 animate-pulse"></span>
+            <span>THE NEXT FRONTIER • LAYER 0 PROOF-OF-HUMAN</span>
           </div>
           <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
-            The Invisible Bulletproof Glass Between Enterprise Employees and Cloud AI.
+            CAPTCHA is Dead in the Browser.<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-purple-400 to-indigo-400">
+              Meet RawHuman: The First I/O-Level Defense Against Multimodal AI Agents.
+            </span>
           </h1>
           <p class="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-            When employees use ChatGPT or Claude, they accidentally paste database passwords, client emails, and AWS keys. GhostGate sits invisibly on the workstation, swaps real secrets with harmless fake replicas in 0.1 milliseconds before they leave the laptop, and seamlessly restores the real secrets when AI replies.
+            Autonomous vision models (Anthropic Computer Use, OpenAI Operator) view desktop pixels directly and inject OS-level mouse and keyboard actions, rendering browser DOM JavaScript CAPTCHAs obsolete. RawHuman enforces human attestation at Layer 0 (OS kernel hooks, USB interrupts, and neuromuscular kinematic entropy) in <strong>0.002 seconds</strong> before routing verified actions to GhostGate's secure HITL execution gateway.
           </p>
         </div>
 
         <!-- 3-Step Visual Card for Zero-Background Investors -->
         <div class="w-full lg:w-auto bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
-          <div class="text-[11px] font-bold uppercase tracking-wider text-indigo-400 font-mono mb-3">
-            How GhostGate Works In 3 Steps
+          <div class="text-[11px] font-bold uppercase tracking-wider text-rose-400 font-mono mb-3">
+            Why Web CAPTCHA Fails vs RawHuman Layer 0
           </div>
           <div class="grid grid-cols-3 gap-3 text-center">
             <div class="bg-slate-950/80 p-3 rounded-xl border border-rose-500/30">
-              <div class="text-rose-400 font-extrabold text-sm sm:text-base">1. 🚨 DANGER</div>
+              <div class="text-rose-400 font-extrabold text-sm sm:text-base">1. 🤖 ROGUE AGENT</div>
               <div class="text-[11px] text-slate-300 mt-1 font-medium">
-                Employee pastes real DB password into AI
+                AI injects synthetic clicks at OS layer (SendInput)
               </div>
             </div>
             <div class="bg-slate-950/80 p-3 rounded-xl border border-indigo-500/40">
-              <div class="text-indigo-400 font-extrabold text-sm sm:text-base">2. ⚡ 0.14ms</div>
+              <div class="text-indigo-400 font-extrabold text-sm sm:text-base">2. ⚡ 0.002s TRAP</div>
               <div class="text-[11px] text-slate-300 mt-1 font-medium">
-                GhostGate swaps secret into synthetic token
+                RawHuman traps LLMHF flag & zero-entropy paths
               </div>
             </div>
             <div class="bg-slate-950/80 p-3 rounded-xl border border-emerald-500/30">
-              <div class="text-emerald-400 font-extrabold text-sm sm:text-base">3. 🛡️ ZERO LEAK</div>
+              <div class="text-emerald-400 font-extrabold text-sm sm:text-base">3. 🛡️ LOCKED OUT</div>
               <div class="text-[11px] text-slate-300 mt-1 font-medium">
-                OpenAI writes code; secrets stay 100% safe
+                I/O bus locks instantly; verified humans pass to GhostGate
               </div>
             </div>
           </div>
@@ -261,21 +266,121 @@ def render_dashboard_html() -> HTMLResponse:
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
 
     <!-- ================================================================= -->
-    <!-- TAB 1: LIVE DATA LEAK DEFENSE (BEFORE VS AFTER SANDBOX)            -->
+    <!-- TAB 1: ROGUE AI AGENT DEFENSE (RAWHUMAN SENTINEL - HERO VIEW)     -->
     <!-- ================================================================= -->
-    <div id="tab-leak-defense" class="space-y-8">
+    <div id="tab-agent-defense" class="space-y-8">
+      <div class="bg-gradient-to-r from-rose-950/40 via-slate-900 to-indigo-950/30 border border-rose-500/30 rounded-2xl p-6 shadow-lg">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-bold mb-3">
+            <span>🚨</span>
+            <span>THE $50B EMERGING THREAT: AUTONOMOUS AGENT TAKEOVER</span>
+          </div>
+          <h2 class="text-2xl font-extrabold text-white">
+            What Happens When An AI Agent Takes Control of Your Mouse & Keyboard?
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+            New autonomous multimodal agents (Anthropic Computer Use, OpenAI Operator) can physically control employee laptops. But what if a malicious webpage tricks an AI agent via prompt injection into clicking 'Transfer $1,000,000' or wiping your enterprise production database? Web CAPTCHAs can't see this. RawHuman™ inspects low-level OS event flags and neuromuscular motor kinematics to block unauthorized AI bot clicks in <strong>0.002 seconds</strong>.
+          </p>
+        </div>
+
+        <!-- Simulation Buttons -->
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <button onclick="runAgentDemo('agent')" id="btn-scenario-agent" class="bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-lg shadow-rose-600/30 transition flex items-center gap-2">
+            <span>🤖</span>
+            <span>Simulate Rogue AI Agent Click (SendInput Bot)</span>
+          </button>
+          <button onclick="runAgentDemo('human')" id="btn-scenario-human" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-2">
+            <span>👤</span>
+            <span>Simulate Real Human Operator (Physical Mouse)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Verdict Banner & Scorecard -->
+      <div id="raw-verdict-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 font-mono text-xs space-y-2 shadow-lg">
+        <div class="text-slate-400">
+          Click an action above to test RawHuman Layer 0 I/O Gate attestation.
+        </div>
+      </div>
+
+      <!-- Telemetry Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
+            OS Kernel Injection Hook
+          </div>
+          <div id="raw-os-flag" class="text-xl font-extrabold font-mono text-white mt-2">Ready...</div>
+          <div class="text-xs text-slate-400 mt-1">
+            Detects programmatic PyAutoGUI / SendInput (0x01 LLMHF)
+          </div>
+        </div>
+
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
+            Hand Kinematic Curvature (Entropy H)
+          </div>
+          <div id="raw-entropy" class="text-xl font-extrabold font-mono text-white mt-2">-</div>
+          <div class="text-xs text-slate-400 mt-1">
+            Humans move with natural curvature; bots move in linear splines
+          </div>
+        </div>
+
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
+            Micro-Timing Tremor Jitter (σ)
+          </div>
+          <div id="raw-jitter" class="text-xl font-extrabold font-mono text-white mt-2">-</div>
+          <div class="text-xs text-slate-400 mt-1">
+            Biological neuromuscular tremor vs discrete OS scheduler intervals
+          </div>
+        </div>
+      </div>
+
+      <!-- DEEP-DIVE: WHY WEB CAPTCHA FAILS vs RAWHUMAN LAYER 0 -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+        <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+          <span>🔬</span>
+          <span>Why Web CAPTCHA Fails vs How RawHuman Solves It at Layer 0</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800/80">
+            <div class="text-rose-400 font-extrabold text-sm mb-1">1. DOM Sandboxing Blindness</div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Google reCAPTCHA and Cloudflare Turnstile run in browser JavaScript sandboxes. Multimodal agents (Claude Computer Use, Operator) read raw desktop screen pixels and inject OS clicks directly. Web sandboxes cannot detect whether an input event originated from physical hardware or programmatic injection.
+            </p>
+          </div>
+          <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800/80">
+            <div class="text-indigo-400 font-extrabold text-sm mb-1">2. Deterministic Kernel Traps</div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Windows sets the low-level hook flag <code>LLMHF_INJECTED = 0x01</code> on all synthetic events. macOS Quartz separates system session flags from physical HID. Physical USB HID controllers emit hardware interrupts. RawHuman catches synthetic inputs at Layer 0 in <strong>0.002s</strong> before actions reach the app.
+            </p>
+          </div>
+          <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800/80">
+            <div class="text-emerald-400 font-extrabold text-sm mb-1">3. Neuromuscular Biomechanics</div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Biological humans obey Fitts's Law and minimum-jerk curves with continuous angular entropy (H &ge; 0.20). AI bots generate linear segments or monotonic Bezier curves with flat OS scheduler timing quanta. Verified humans pass transparently to GhostGate's secure execution gateway.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 2: LIVE DATA LEAK DEFENSE (AI PRIVACY PLAYGROUND)              -->
+    <!-- ================================================================= -->
+    <div id="tab-leak-defense" class="hidden space-y-8">
       <!-- Scenario Selector Banner -->
       <div class="bg-gradient-to-r from-indigo-950/60 via-purple-950/30 to-slate-900 border border-indigo-500/30 rounded-2xl p-6 shadow-lg">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-bold">INTERACTIVE DEMO</span>
+              <span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-bold">⚡ AI Privacy Playground</span>
               <h2 class="text-xl font-extrabold text-white">
-                Test A Real-World Corporate Data Leak
+                GhostGate Downstream Secure Execution & Data Shield
               </h2>
             </div>
             <p class="text-xs sm:text-sm text-slate-300 mt-1.5 max-w-3xl leading-relaxed">
-              Choose an employee mistake below to see how GhostGate transparently intercepts credentials before they leave the laptop.
+              Once human presence is attested by RawHuman, GhostGate intercepts outbound LLM requests and high-risk tool executions to shadow credentials with syntactically valid mock tokens before egress.
             </p>
           </div>
           <div class="flex items-center gap-2 bg-slate-950/80 px-4 py-2 rounded-xl border border-slate-800 text-xs font-mono shrink-0">
@@ -403,112 +508,40 @@ def render_dashboard_html() -> HTMLResponse:
     </div>
 
     <!-- ================================================================= -->
-    <!-- TAB 2: ROGUE AI AGENT DEFENSE (RAWHUMAN SENTINEL)                  -->
-    <!-- ================================================================= -->
-    <div id="tab-agent-defense" class="hidden space-y-8">
-      <div class="bg-gradient-to-r from-rose-950/40 via-slate-900 to-indigo-950/30 border border-rose-500/30 rounded-2xl p-6 shadow-lg">
-        <div class="max-w-3xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-bold mb-3">
-            <span>🚨</span>
-            <span>THE $50B EMERGING THREAT: ROGUE AGENT HIJACK</span>
-          </div>
-          <h2 class="text-2xl font-extrabold text-white">
-            What Happens When An AI Agent Takes Control of Your Mouse & Keyboard?
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
-            New autonomous agents (Anthropic Computer Use, OpenAI Operator) can physically control employee laptops. But what if a malicious website tricks an AI agent via prompt injection into clicking 'Transfer $1,000,000' or wiping your enterprise database? GhostGate RawHuman™ inspects physical motor kinematics to physically block unauthorized AI bot clicks.
-          </p>
-        </div>
-
-        <!-- Simulation Buttons -->
-        <div class="mt-6 flex flex-wrap items-center gap-3">
-          <button onclick="runAgentDemo('agent')" id="btn-scenario-agent" class="bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-lg shadow-rose-600/30 transition flex items-center gap-2">
-            <span>🤖</span>
-            <span>Simulate Rogue AI Agent Click (SendInput Bot)</span>
-          </button>
-          <button onclick="runAgentDemo('human')" id="btn-scenario-human" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-2">
-            <span>👤</span>
-            <span>Simulate Real Human Employee (Physical Mouse)</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Verdict Banner & Scorecard -->
-      <div id="raw-verdict-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 font-mono text-xs space-y-2 shadow-lg">
-        <div class="text-slate-400">
-          Select an action above to test RawHuman I/O Gate attestation.
-        </div>
-      </div>
-
-      <!-- Telemetry Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
-          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-            OS Kernel Injection Hook
-          </div>
-          <div id="raw-os-flag" class="text-xl font-extrabold font-mono text-white mt-2">Ready...</div>
-          <div class="text-xs text-slate-400 mt-1">
-            Detects programmatic PyAutoGUI / SendInput
-          </div>
-        </div>
-
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
-          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-            Hand Kinematic Curvature
-          </div>
-          <div id="raw-entropy" class="text-xl font-extrabold font-mono text-white mt-2">-</div>
-          <div class="text-xs text-slate-400 mt-1">
-            Humans move with curves; bots move in straight lines
-          </div>
-        </div>
-
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
-          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-            Micro-Timing Jitter
-          </div>
-          <div id="raw-jitter" class="text-xl font-extrabold font-mono text-white mt-2">-</div>
-          <div class="text-xs text-slate-400 mt-1">
-            Human muscle tremor vs instant 0ms bot clicks
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================================================================= -->
     <!-- TAB 3: EXECUTIVE SUMMARY & VC PITCH (FOR INVESTORS)               -->
     <!-- ================================================================= -->
     <div id="tab-vc-pitch" class="hidden space-y-8">
       <!-- Investment Thesis Card -->
       <div class="bg-gradient-to-r from-indigo-950/70 via-slate-900 to-purple-950/50 border border-indigo-500/30 rounded-2xl p-6 sm:p-8 shadow-xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-mono font-bold mb-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-mono font-bold mb-4">
           <span>📈</span>
-          <span>THE $45B ENTERPRISE AI OPPORTUNITY</span>
+          <span>THE $45B AUTONOMOUS AI SECURITY OPPORTUNITY</span>
         </div>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-white leading-snug">
-          Why GhostGate Is The Critical Missing Layer in Enterprise AI Adoption.
+          The Death of Web CAPTCHA & The Rise of Layer 0 Agent Defense
         </h2>
         <p class="text-sm sm:text-base text-slate-300 mt-3 leading-relaxed max-w-4xl">
-          78% of Fortune 500 CISOs currently restrict or ban generative AI tools because of data breach liability and intellectual property theft. GhostGate solves this at the endpoint: employees get 100% productivity, while the enterprise gets mathematical zero-leak guarantees.
+          Legacy anti-bot architectures (reCAPTCHA, Turnstile) rely on browser JavaScript sandboxes that are utterly blind to multimodal vision agents controlling the OS desktop. RawHuman establishes the new category: hardware and kernel-level human attestation before routing to GhostGate's secure execution gateway.
         </p>
 
         <!-- 3 Core Competitive Moats -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6 pt-6 border-t border-slate-800">
           <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
-            <div class="text-indigo-400 font-extrabold text-base">1. Zero Friction Proxy</div>
+            <div class="text-rose-400 font-extrabold text-base">1. Layer 0 Kernel & Hardware Moat</div>
             <div class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-              No code modification, no complex SDK. Works seamlessly across Mac, Windows, and Linux workstations.
+              Catches OS injection flags (LLMHF_INJECTED) and verifies physical USB HID controllers in 0.002s, where browser JS cannot reach.
             </div>
           </div>
           <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
-            <div class="text-purple-400 font-extrabold text-base">2. Format-Preserving AST</div>
+            <div class="text-purple-400 font-extrabold text-base">2. Neuromuscular Kinematics Engine</div>
             <div class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-              Proprietary synthetic shadow tokenization that keeps code syntax valid and eliminates LLM hallucinations.
+              Evaluates Fitts's law ballistic deceleration, continuous curvature entropy (H >= 0.20), and micro-tremor timing jitter.
             </div>
           </div>
           <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
-            <div class="text-cyan-400 font-extrabold text-base">3. RawHuman Agent Barrier</div>
+            <div class="text-cyan-400 font-extrabold text-base">3. In-Line HITL Execution Gateway</div>
             <div class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-              The world's first hardware/kinematic layer blocking rogue autonomous AI agents from hijacking employee PCs.
+              Downstream HITL tool execution gateway and 0.14ms format-preserving secret shadowing with zero data retention (ZDR).
             </div>
           </div>
         </div>
@@ -679,7 +712,7 @@ def render_dashboard_html() -> HTMLResponse:
   <script>
     // Tab Switching Logic
     function switchTab(tabName) {
-      const tabs = ['leak-defense', 'agent-defense', 'vc-pitch', 'soc-telemetry', 'api-specs'];
+      const tabs = ['agent-defense', 'leak-defense', 'vc-pitch', 'soc-telemetry', 'api-specs'];
       tabs.forEach(t => {
         const pane = document.getElementById('tab-' + t);
         if (pane) pane.classList.add('hidden');
@@ -819,7 +852,7 @@ def proprietary_key_exchange(secret_seed):
             Origin: Physical Hardware HID Controller (Organic micro-tremors confirmed)
           </div>
           <div class="text-emerald-300 font-bold mt-2 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
-            Attestation ID: rawhuman_attest_9f83a8b2 • Action Permitted
+            Attestation ID: rawhuman_attest_9f83a8b2 • Action Permitted to GhostGate Gateway
           </div>
         `;
       }
@@ -874,8 +907,9 @@ def proprietary_key_exchange(secret_seed):
       });
     }
 
-    // Pre-populate with Postgres scenario on initial load
+    // Auto-run agent simulation and prep scenarios on initial load
     window.addEventListener('DOMContentLoaded', () => {
+      runAgentDemo('agent');
       loadScenario('postgres');
     });
   </script>
