@@ -6,7 +6,7 @@ This document provides a battle-tested, authoritative breakdown of data retentio
 
 ## 1. Executive Summary: The "Data Training" Landscape
 
-| Provider & Tier | Web/Consumer UI Trains? | API Trains by Default? | Plaintext Retention Window | How to Guarantee 100% Zero-Leak |
+| Provider & Tier | Web/Consumer UI Trains? | API Trains by Default? | Plaintext Retention Window | How to Enforce Zero Data Retention (ZDR) |
 | :--- | :--- | :--- | :--- | :--- |
 | **OpenAI (ChatGPT Free/Plus)** | **YES (Default ON)** | N/A | Infinite / Account deletion | Data Controls -> Disable "Improve model for everyone" |
 | **OpenAI (Team / Enterprise)** | NO | N/A | Workspace retention rules | Contractual enterprise agreement |
@@ -82,7 +82,7 @@ This document provides a battle-tested, authoritative breakdown of data retentio
 
 | Threat Category | Without GhostGate | With GhostGate Proxy (`localhost:8080`) |
 | :--- | :--- | :--- |
-| **AWS / GCP / DB Credentials** | Sent in plaintext to LLM servers; retained for 30 days in logs | Tokenized to `[GHOST_REDACTED_AWS_KEY_001]` locally; never leaves RAM |
+| **AWS / GCP / DB Credentials** | Sent in plaintext to LLM servers; retained for 30 days in logs | Replaced with format-preserving synthetic shadow (e.g. `AKIA7B8C9D0E1F2G3H4I`); never leaves RAM |
 | **Customer PII (Emails, Phones)** | Subject to subpoena or external breach during retention | Replaced with deterministic surrogate tokens; rehydrated on return |
 | **Source Code Fingerprinting** | SDK user-agent & telemetry headers transmitted to vendor | All tracking & telemetry headers stripped; clean ZDR headers injected |
 | **Accidental Secret Paste** | Immediately logged to remote vendor servers | High-entropy scanner catches string and halts/masks transmission |
