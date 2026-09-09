@@ -1,158 +1,161 @@
 <p align="center">
   <h1 align="center">🛡️ GHOSTGATE</h1>
   <p align="center">
-    <strong>Open-Source AI Privacy Proxy & Agentic I/O Sentinel for Enterprise LLM Workflows</strong><br>
-    <em>Format-Preserving Data Sovereignty • Zero Disk Retention • Kinematic Proof-of-Human Sentinel</em>
+    <strong>Local AI Security Proxy & Synthetic Interaction Detection Prototype</strong><br>
+    <em>Format-Preserving Secret Masking • Human-in-the-Loop Execution Gate • OS & Kinematic Abuse Detection</em>
   </p>
   <p align="center">
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License: Apache-2.0"></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-brightgreen.svg" alt="Python 3.10+">
     <img src="https://img.shields.io/badge/docker-ready-2496ED.svg" alt="Docker Ready">
-    <img src="https://img.shields.io/badge/tests-26%20passed-success.svg" alt="Tests: 26 passed">
-    <img src="https://img.shields.io/badge/benchmark-reproducible-blue.svg" alt="Benchmark: Reproducible">
+    <img src="https://img.shields.io/badge/tests-27%20passed-success.svg" alt="Tests: 27 passed">
+    <img src="https://img.shields.io/badge/benchmarks-reproducible-blue.svg" alt="Benchmarks: Reproducible">
     <img src="https://img.shields.io/badge/attack%20corpus-validated-brightgreen.svg" alt="Attack Corpus Validated">
   </p>
 </p>
 
 ---
 
-## ⚡ The Dual Security Challenge in Modern AI
+## 🧭 Overview: Three Core Pillars
 
-As software teams integrate commercial LLMs and autonomous agents into developer workstations, standard enterprise perimeters face two critical vulnerabilities:
+GhostGate is an open-source security gateway designed around three engineering pillars:
 
-1. **Outbound Data Exfiltration**: Commercial LLM APIs retain prompts in plaintext for **30 to 90 days** for safety reviews and potential fine-tuning. When developers paste code containing API keys, private keys, database connection strings, or customer PII, secrets are broadcast to third-party logs. Naive redaction (e.g., `[REDACTED_SECRET]`) breaks code syntax, regex validation, and LLM reasoning.
-2. **Inbound Agent Takeover & Synthetic I/O Hijacking**: Multimodal autonomous desktop agents (e.g. Anthropic Computer Use, OpenAI Operator) capture desktop frames and issue programmatic OS input events (`SendInput`, `CGEventPost`, `uinput`). Standard browser-level protections (`event.isTrusted`) are bypassed at the operating system layer.
-
-**GhostGate** provides a lightweight, local security proxy and I/O sentinel that addresses both vectors locally without requiring proprietary cloud middleware.
+1. **Abuse & Synthetic Interaction Detection (`rawhuman_engine/`)**: A research prototype exploring whether programmatic automation (multimodal desktop agents, scripted macros) can be differentiated from authentic human interaction via low-level OS event metadata and kinematic trajectory dynamics.
+2. **Security Gateway & Policy Enforcement (`ghostgate_core/`)**: A local proxy enforcing format-preserving secret shadowing, Human-in-the-Loop (HITL) approval gates for destructive tool calls, and deterministic local air-gap routing.
+3. **Production Systems & Performance Engineering**: A containerized, async reverse proxy with sub-millisecond internal processing overhead, verifiable via reproducible benchmarks and live multi-container end-to-end integration tests.
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ Architecture
 
 ```mermaid
 graph TD
-    subgraph OUTBOUND ["1. Outbound Protection: GhostGate Privacy Proxy (:8080)"]
-        Dev[Engineer / IDE / CI Pipeline] -->|Prompt with Secrets & Code| Proxy[GhostGate Proxy :8080]
-        Proxy -->|Format-Preserving AST Engine| Redactor[Synthetic Shadowing Engine]
-        Redactor -->|Valid Mock Tokens: AKIA... 20 chars| CloudLLM[Commercial Cloud LLM Provider]
-        Redactor -->|Detected #@airgap tag| LocalLLM[Offline Air-Gap Ollama Container :11434]
-        CloudLLM -->|Streamed SSE Response| Proxy
-        Proxy -->|In-Memory Rehydration| Dev
+    subgraph GATEWAY ["Security Gateway Layer: GhostGate Proxy (:8080)"]
+        Client[Developer / IDE / CI Client] -->|HTTP / SSE Stream| Proxy[GhostGate Async Proxy]
+        Proxy -->|Format-Preserving Engine| Redactor[Synthetic Shadowing]
+        Redactor -->|Shadowed Mock Tokens: AKIA...| Upstream[Upstream LLM Provider]
+        Redactor -->|Detected #@airgap tag| LocalLLM[Offline Ollama Container :11434]
+        Upstream -->|Chunk-Boundary Resilient SSE| Proxy
+        Proxy -->|In-Memory Rehydration| Client
     end
 
-    subgraph INBOUND ["2. Inbound Protection: RawHuman Sentinel (:8081)"]
-        CloudLLM -->|Autonomous Tool Call: bash, db_delete| Gateway[HITL Execution Gateway]
-        Gateway -->|Halt & Request Physical Presence| Sentinel[RawHuman Sentinel]
-        Sentinel -->|Inspect OS Injected Event Flags| OSCheck{OS Low-Level Hook Check}
-        Sentinel -->|Directional Curvature Entropy & Jitter| KinematicCheck{Kinematic Trajectory}
-        Sentinel -->|ADA / Sensor Fallback| TouchID[Hardware TouchID / WebAuthn]
-        OSCheck -->|Physical HID Origin| Exec[Execute Tool Call]
-        KinematicCheck -->|Ballistic Jitter Confirmed| Exec
+    subgraph DEFENSE ["Abuse Detection Layer: RawHuman Sentinel (:8081)"]
+        Upstream -->|Tool Call: bash, db_delete| HITL[HITL Execution Gate]
+        HITL -->|Query Input Attribution| Sentinel[RawHuman Sentinel]
+        Sentinel -->|Inspect OS Injected Event Flags| OSCheck{OS Low-Level Hook}
+        Sentinel -->|Curvature Entropy & Timing Jitter| KinematicCheck{Kinematic Dynamics}
+        Sentinel -->|Hardware Attestation Fallback| TouchID[WebAuthn / TouchID]
+        OSCheck -->|Physical HID Origin| Exec[Permit Action]
+        KinematicCheck -->|Human Dynamics Fit| Exec
         TouchID -->|Biometric Verified| Exec
-        OSCheck -->|Flag Detected: Synthetic Injected| Block[Terminate Action (< 2ms)]
-        KinematicCheck -->|Flat Jitter / Synthetic Bezier| Block
+        OSCheck -->|Injected Flag Detected| Block[Block Action (< 2ms)]
+        KinematicCheck -->|Monotonic Bezier / Flat Clock| Block
     end
 ```
 
 ---
 
-## 🔬 Systems Architecture & Detection Specifications
+## 🔍 Pillar 1: Abuse & Synthetic Interaction Detection (`rawhuman_engine/`)
 
-### 1. Format-Preserving Synthetic Shadowing
-Rather than corrupting prompts with bracketed tags (`[AWS_KEY_REDACTED]`), GhostGate uses **format-preserving synthetic shadowing**:
-- Detected secrets are mapped to syntactically indistinguishable mock values conforming to the exact regex pattern, length, and character alphabet (e.g., an AWS key `AKIAIOSFODNN7EXAMPLE` is shadowed as `AKIA7B8C9D0E1F2G3H4I`).
-- Downstream LLM code generation and syntax parsers (AST) treat the mock value as valid code without syntax errors.
-- Translations are preserved in ephemeral process memory (`secrets_vault.py`) and reversed in real-time across both unary JSON and streaming Server-Sent Events (SSE). **Zero tokens or prompts are ever written to disk.**
+The RawHuman engine explores input attribution across two defense layers:
 
-### 2. OS-Level Synthetic Event Flag Inspection
-To detect programmatic injection without relying on browser heuristics, the RawHuman engine inspects low-level OS event pipeline flags:
+### 1. Low-Level OS Event Metadata (Definitive Signals)
+Standard desktop automation frameworks generate synthetic events through operating system APIs. These APIs tag events in system hook structures:
 
 * **Windows (Win32 SDK `winuser.h`)**:
-  - `MSLLHOOKSTRUCT.flags` bit 0 (`0x00000001`): **`LLMHF_INJECTED`**. *Note: `LLMH` stands for **Low-Level Mouse Hook**, defined by Microsoft in Windows 2000 (`winuser.h`) — it is an OS subsystem flag, not an AI buzzword.*
+  - `MSLLHOOKSTRUCT.flags` bit 0 (`0x00000001`): **`LLMHF_INJECTED`**. Defined by Microsoft in Windows 2000 for Low-Level Mouse Hooks (`LLMH`). Software tools invoking `SendInput()` or `mouse_event()` set this flag.
   - `KBDLLHOOKSTRUCT.flags` bit 4 (`0x00000010`): **`LLKHF_INJECTED`** (Low-Level Keyboard Hook injected flag).
-  - Software automation tools calling `SendInput()` or `mouse_event()` automatically trigger these flags unless kernel drivers are modified.
 * **macOS (Quartz Event Services)**:
   - Evaluation of `kCGEventSourceStatePrivate` vs `kCGEventSourceStateCombinedSessionState`.
-  - Inspection of `CGEventGetIntegerValueField(event, kCGEventSourceUserData)` and monotonic IOHID timestamp continuity.
-* **Linux (evdev & uinput)**:
-  - Inspection of input device sysfs nodes, isolating physical USB HID endpoints (`/dev/input/by-id/usb-*`) from virtual synthetic device handles (`/dev/input/uinput`).
+  - Checking `CGEventGetIntegerValueField(event, kCGEventSourceUserData)` and monotonic IOHID timestamp continuity.
+* **Linux (`evdev` & `uinput`)**:
+  - Differentiating physical hardware input nodes (`/dev/input/by-id/usb-*`) from virtual synthetic device handles (`/dev/input/uinput`).
 
-### 3. Kinematic Trajectory Dynamics
-Early academic concepts suggested measuring human hand tremor (8–12Hz) via mouse coordinate sampling. In production environments, OS scheduler timer quantization, mouse sensor polling rates (125Hz–1000Hz), and vendor micro-smoothing render frequency-domain biological tremor detection mathematically unreliable in user space.
+### 2. Kinematic Trajectory Dynamics (Behavioral Heuristics)
+To detect automation tools that might bypass user-space flags, RawHuman evaluates three kinematic properties:
+1. **Directional Curvature Entropy**: Calculates the Shannon entropy of angular derivatives ($\Delta \theta$). Scripted paths (PyAutoGUI, Bezier splines) exhibit monotonic or near-zero angular entropy ($H \to 0$), whereas neuromuscular movement displays continuous micro-corrections ($H \ge 0.20$).
+2. **Discrete OS Scheduler Timing Jitter**: Scripted loops cluster around discrete OS scheduler quanta (e.g., 10ms or 15.6ms ticks). Physical USB HID controllers exhibit microsecond hardware oscillator drift.
+3. **Fitts's Law Ballistic Deceleration**: Verifies that acceleration and deceleration phases follow human ballistic movement rather than constant-velocity or naive linear interpolation.
 
-GhostGate instead enforces **Kinematic Trajectory Dynamics**:
-1. **Directional Curvature Entropy**: Calculation of the Shannon entropy of directional change angles ($\Delta \theta$). Robotic trajectories exhibit monotonic Bezier curvatures ($H \to 0$), whereas neuromuscular movements display continuous non-zero angular entropy ($H \ge 0.20$).
-2. **Discrete OS Scheduler Timing Jitter**: Measurement of inter-event timing variance relative to hardware interrupt intervals ($J = |(t_{i+1} - t_i) - \overline{\Delta t}| / \overline{\Delta t}$). Scripted bots emit uniform delay quantums ($\sigma \approx 0$).
-3. **Fitts's Law Ballistic Deceleration**: Validation that acceleration and deceleration phases match human ballistic reaching laws rather than constant-velocity or naive easing algorithms.
+> [!NOTE]
+> **Dataset Provenance & Research Prototype Scope**:  
+> Current test datasets in [`tests/corpus/synthetic_agent_corpus.json`](tests/corpus/synthetic_agent_corpus.json) model algorithmic automation patterns (linear interpolation, cubic Bezier splines, discrete timer loops) against modeled human reaching trajectories.  
+> **Open Engineering Questions**: Adaptive bots that synthesize pseudo-random jitter, input device variability (125Hz office mice vs 1000Hz gaming mice), and assistive trackpad touch smoothing. Hardware TouchID / WebAuthn is provided as a zero-false-positive attestation fallback.
 
 ---
 
-## 🎯 Empirical Attack & Evaluation Corpus (`tests/corpus/`)
+## 🛡️ Pillar 2: Security Gateway & Policy Enforcement (`ghostgate_core/`)
 
-To prevent regression and evaluate detection efficacy against real-world attack vectors, GhostGate maintains a structured evaluation corpus in [`tests/corpus/`](tests/corpus/):
+### 1. Format-Preserving Synthetic Shadowing
+Rather than corrupting prompts with bracketed tags (`[AWS_KEY_REDACTED]`), GhostGate replaces credentials with syntactically valid mock tokens of identical format and length (e.g. `AKIAIOSFODNN7EXAMPLE` ➔ `AKIA7B8C9D0E1F2G3H4I`):
+- Code generation models and AST parsers receive syntactically valid code without breaking indentation or type rules.
+- Lookup mappings reside strictly in ephemeral process RAM (`secrets_vault.py`) and are reversed during response rehydration.
 
-* **[`secrets_leakage_corpus.json`](tests/corpus/secrets_leakage_corpus.json)**:
-  - 22+ curated test cases spanning cloud provider credentials (AWS IAM/STS, GCP), developer tokens (GitHub classic & fine-grained PATs), LLM keys (OpenAI legacy & project, Anthropic), database connection strings (Postgres, MySQL, Mongo, Redis), PII (emails, IPs, phone numbers), complex multi-line YAML configs, and negative controls (UUIDs, Git commit hashes, normal high-vocabulary English).
-* **[`synthetic_agent_corpus.json`](tests/corpus/synthetic_agent_corpus.json)**:
-  - Mouse trajectories from PyAutoGUI linear interpolation, monotonic cubic Bezier curves, and physical human reaching movements.
-* **[`adversarial_prompts_corpus.json`](tests/corpus/adversarial_prompts_corpus.json)**:
-  - Adversarial prompt injection samples attempting instruction overrides, base64 evasion, and markdown code fence extraction.
+### 2. Chunk-Boundary Resilient SSE Streaming Rehydration
+In streaming responses (Server-Sent Events), surrogate tokens can be sliced across arbitrary network packet or chunk boundaries (e.g., `"AKIA1234"` in chunk $N$ and `"567890123456"` in chunk $N+1$).
+- GhostGate implements a prefix-aware sliding buffer (`rehydrate_streaming_chunk`):
+  - Any complete tokens in the buffer are restored immediately.
+  - If the buffer's tail matches a prefix of an active surrogate token, that suffix is retained in the buffer while preceding text is emitted.
+  - Guarantees zero token corruption across streaming chunk boundaries.
 
-Run the automated corpus evaluation:
+### 3. Human-in-the-Loop (HITL) Execution Gateway
+Autonomous agent tool calls are classified by risk:
+- **Low Risk** (`read_file`, `search_docs`): Auto-permitted.
+- **High Risk** (`bash_exec`, `delete_database`, `aws_terminate`): Intercepted. Requires physical human confirmation verified by RawHuman or hardware TouchID before the gateway permits execution.
+
+### 4. Deterministic Air-Gap Routing
+Prompts containing the `# @airgap` directive or matching classified data rules bypass external networks entirely and route to an isolated, containerized Ollama instance.
+
+---
+
+## ⚡ Pillar 3: Production Engineering & Performance
+
+### 1. Reproducible Engine Latency Benchmarks
+Benchmarks are measured using [`benchmarks/run_benchmarks.py`](benchmarks/run_benchmarks.py) on Apple Silicon arm64 (Python 3.14 CPython, 100 warmup cycles, 1,000 measured iterations):
+
+| Component / Test Case | Payload Size | P50 Overhead | P90 Overhead | P99 Overhead | Throughput |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Masking: Small Payload** (1 AWS Key) | 128 Bytes | **0.012 ms** | **0.013 ms** | **0.033 ms** | 72,000+ ops/s |
+| **Masking: Medium Payload** (5 mixed secrets) | 1.38 KB | **0.089 ms** | **0.101 ms** | **0.261 ms** | 10,300+ ops/s |
+| **Masking: Large Payload** (10 mixed secrets) | 11.1 KB | **0.709 ms** | **0.738 ms** | **0.787 ms** | 1,400+ ops/s |
+| **In-Memory Rehydration Overhead** | 1.38 KB | **0.004 ms** | **0.004 ms** | **0.006 ms** | — |
+| **Kinematic Trajectory Evaluation** | 25 points | **0.011 ms** | **0.012 ms** | **0.015 ms** | — |
+
+- **Peak Memory Allocated** (during 1,000-cycle batch): **12.93 KB**
+- **Benchmark Scope**: These benchmarks measure internal engine processing overhead (regex matching, substitution, buffer rehydration, kinematic calculations). They do not include network round-trip time to third-party cloud LLMs.
+
+Reproduce locally:
+```bash
+make bench
+```
+
+### 2. Empirical Attack & Evaluation Corpus (`tests/corpus/`)
+Detection capabilities are validated against structured test corpora:
+- [`secrets_leakage_corpus.json`](tests/corpus/secrets_leakage_corpus.json): 22+ test scenarios covering AWS IAM/STS, GCP, GitHub PATs, OpenAI/Anthropic keys, Postgres/MySQL/Mongo/Redis URIs, PII, multi-line YAML configs, and negative controls (UUIDs, Git commit hashes) to ensure low false-positive rates.
+- [`synthetic_agent_corpus.json`](tests/corpus/synthetic_agent_corpus.json): Automation trajectories (PyAutoGUI, cubic Bezier) vs human physical reaching curves.
+- [`adversarial_prompts_corpus.json`](tests/corpus/adversarial_prompts_corpus.json): Instruction override and encoding evasion samples.
+
+Run corpus verification:
 ```bash
 pytest tests/test_attack_corpus.py -v
 ```
 
 ---
 
-## 📊 Reproducible Latency Benchmarks & Profiling
+## ⚖️ Security Boundaries & Scope
 
-### Benchmark Methodology
-Benchmarks are measured using the automated harness in [`benchmarks/run_benchmarks.py`](benchmarks/run_benchmarks.py).
-- **Environment**: Apple Silicon arm64, Darwin 25.6.0, Python 3.14 (CPython).
-- **Protocol**: Single-thread synchronous execution, 100 warmup iterations followed by 1,000 measured iterations per test.
-- **Memory Profiling**: Measured using Python `tracemalloc` for peak memory allocation during batch operations.
-
-### Empirical Results
-
-| Test Case | Payload Size | P50 Latency | P90 Latency | P99 Latency | Throughput |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Small Payload Masking** (1 AWS Key) | 128 Bytes | **0.013 ms** | **0.013 ms** | **0.016 ms** | 78,000+ ops/sec |
-| **Medium Payload Masking** (5 mixed secrets) | 1.38 KB | **0.088 ms** | **0.101 ms** | **0.285 ms** | 10,100+ ops/sec |
-| **Large Payload Masking** (10 mixed secrets) | 11.1 KB | **0.693 ms** | **0.728 ms** | **0.940 ms** | 1,400+ ops/sec |
-| **In-Memory Rehydration Overhead** | 1.38 KB | **0.004 ms** | **0.004 ms** | **0.004 ms** | — |
-| **Kinematic Trajectory Evaluation** | 25 points | **0.011 ms** | **0.012 ms** | **0.015 ms** | — |
-
-- **Peak Heap Memory Allocated** (during 1,000-cycle batch): **12.89 KB**
-- **Disk Persistence**: **0 bytes** (All translation dictionaries are RAM-only and ephemeral).
-
-To reproduce these benchmarks on your machine:
-```bash
-make bench
-```
-
----
-
-## ⚖️ Security Scope & Known Boundaries
-
-In production security engineering, no tool provides absolute protection. GhostGate explicitly defines its detection boundaries and known trade-offs:
-
-| Layer | What GhostGate Protects | Known Limitations & Trade-offs |
+| Area | In-Scope Guarantees | Known Limitations & Out-of-Scope |
 | :--- | :--- | :--- |
-| **Secret Masking** | Deterministic detection & format-preserving masking of defined regex grammars (AWS, GCP, GitHub, Slack, OpenAI, Anthropic, DB URIs, PII) and high-entropy strings ($H \ge 3.8\text{ bits/byte}$, length $\ge 16$). | Custom-encoded secrets (e.g. base64-within-hex, rot13) or secrets broken across multiple non-contiguous prompts require custom regex definitions. |
-| **Entropy Engine** | High-entropy random strings without predefined regex formats (e.g. proprietary tokens). | Natural high-entropy strings (e.g., base64 media headers, scientific constants) may trigger false positives unless excluded by custom rules. |
-| **Data Retention** | Ephemeral RAM storage. Zero tokens, prompts, or mapping dictionaries are written to persistent disk. | Process memory can be inspected if an attacker possesses root/administrator privileges and attaches a debugger (`ptrace`/`lldb`). |
-| **Air-Gap Routing** | Deterministic local diversion to offline Ollama container when prompted with `# @airgap` or configured sensitive patterns. | Requires local Docker daemon and Ollama service running. Prompts without the tag/pattern proceed to the configured cloud upstream. |
-| **Kinematic Sentinel** | Programmatic automation tools using standard OS user-space APIs (`SendInput`, `CGEventPost`, `uinput`) and robotic Bezier/linear mouse movements. | High-polling gaming mice (1000Hz+) vs office mice (125Hz) have different jitter profiles; assistive trackpad smoothing may require TouchID/WebAuthn fallback. |
-| **Host Integrity** | User-space process boundaries. | Out of scope: Kernel rootkits (Ring 0) and physical USB hardware implants (e.g. custom microcontroller emulating USB HID hardware interrupts). |
+| **Secret Masking** | Deterministic masking of defined regex grammars and high-entropy strings ($H \ge 3.8\text{ bits/byte}$, length $\ge 16$). | Custom-encoded ciphers or secrets split non-contiguously across multiple prompt turns require dedicated regex rules. |
+| **Data Retention** | GhostGate itself does not persist prompt or token mapping tables to disk. Mappings are held strictly in ephemeral process RAM. | Host OS swap, Docker container runtime logs, and external reverse proxies must be configured by system administrators to prevent indirect disk logging. |
+| **Air-Gap Routing** | Prompts tagged `# @airgap` are routed locally to the offline Ollama container. | Prompts without tags or matching rules proceed to the configured cloud upstream. |
+| **Input Attribution** | Detects OS-level automation API flags (`SendInput`, `CGEventPost`) and scripted monotonic trajectories. | Adaptive bots synthesizing human-like jitter, varying mouse polling rates (125Hz vs 1000Hz), and kernel rootkits (Ring 0) with direct memory scraping. |
 
 ---
 
-## ⚡ Quickstart
+## 🚀 Quickstart
 
 ### Option A: Docker Compose (Production Multi-Container Stack)
-
-Launch the full stack (GhostGate Proxy, RawHuman Sentinel, and Offline Air-Gap Ollama container) in one command:
 
 ```bash
 git clone https://github.com/MinsuKin/ghostgate.git
@@ -160,7 +163,7 @@ cd ghostgate
 docker compose up -d
 ```
 
-| Service | Endpoint | Purpose |
+| Service | Endpoint | Role |
 | :--- | :--- | :--- |
 | **GhostGate Proxy** | `http://127.0.0.1:8080/v1` | Reverse proxy with format-preserving masking |
 | **CISO SOC Dashboard** | `http://127.0.0.1:8080/dashboard` | Real-time telemetry, secret audit trail, and KPIs |
@@ -174,69 +177,50 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# Run GhostGate Proxy
+# Start GhostGate Proxy
 python -m ghostgate_core.proxy
 
-# In a separate terminal: Run RawHuman Sentinel
+# In a separate terminal: Start RawHuman Sentinel
 python -m rawhuman_engine.server
 ```
 
 ---
 
-## 🔌 Drop-In SDK Integration
+## 🔌 SDK Integration
 
-Point your existing OpenAI or Anthropic SDK clients to `http://127.0.0.1:8080/v1`:
+Point standard OpenAI or Anthropic SDK clients to `http://127.0.0.1:8080/v1`:
 
-### Python (OpenAI SDK)
 ```python
 from openai import OpenAI
 
-# GhostGate intercepts, shadows secrets, strips telemetry, and rehydrates responses
 client = OpenAI(
     base_url="http://127.0.0.1:8080/v1",
     api_key="your-openai-api-key"
 )
 
+# Secrets are masked before egress and restored in-memory upon stream return
 response = client.chat.completions.create(
     model="gpt-4o",
     messages=[
-        {"role": "user", "content": "Review this config: AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"}
+        {"role": "user", "content": "Review config: AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"}
     ]
 )
-
-# Response is automatically rehydrated in memory
 print(response.choices[0].message.content)
-```
-
-### Deterministic Air-Gap Routing
-Tag any prompt with `# @airgap` to prevent external network egress. GhostGate diverts the prompt to the local offline Ollama container:
-
-```python
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[
-        {"role": "user", "content": "# @airgap Analyze our internal merger agreement..."}
-    ]
-)
-# Handled 100% locally via Ollama — zero bytes leave the workstation.
 ```
 
 ---
 
-## 🛠️ Workstation Security Tools
-
-### Workstation AI Security Auditor (`ghostgate audit`)
-Inspect local developer workstations (Cursor IDE, VS Code, shell environments) for unencrypted keys and telemetry leakage:
+## 🧪 Testing & Verification
 
 ```bash
-python -m ghostgate_core.cli audit
-```
+# 1. Run unit and corpus evaluation tests (22 tests)
+pytest tests/ -v -k "not e2e"
 
-### RawHuman Interactive Verification Demo
-Simulate live autonomous agent input injection vs authentic biological mouse motion:
+# 2. Run live multi-container E2E integration tests (5 tests)
+pytest tests/test_e2e_live.py -v -s
 
-```bash
-python -m rawhuman_engine.demo_cli
+# 3. Run reproducible latency benchmarks
+make bench
 ```
 
 ---
@@ -249,34 +233,28 @@ python -m rawhuman_engine.demo_cli
 │   ├── run_benchmarks.py          # Benchmark runner (P50/P90/P99 latency & tracemalloc)
 │   └── benchmark_results.json     # Machine-readable benchmark outputs
 ├── config.yaml                    # Privacy policies, upstream configs, and redaction patterns
-├── docker-compose.yml             # Production multi-container orchestration
-├── Makefile                       # Developer shortcuts (build, run, test, bench, e2e)
+├── docker-compose.yml             # Multi-container production orchestration
+├── Makefile                       # Developer commands (install, test, bench, e2e, docker-up)
 ├── pyproject.toml                 # Package metadata and dependencies
-├── ghostgate_core/                # Layer 7 Privacy Proxy & Redaction Engine
+├── ghostgate_core/                # Security Gateway & Redaction Engine
 │   ├── proxy.py                   # Async FastAPI reverse proxy
-│   ├── redactor.py                # Format-preserving synthetic shadowing engine
+│   ├── redactor.py                # Format-preserving synthetic shadowing & SSE rehydration
 │   ├── zdr_enforcer.py            # Telemetry stripper & Zero Data Retention enforcer
 │   ├── hitl_gateway.py            # Human-in-the-Loop tool call execution gateway
 │   ├── auditor.py                 # Developer workstation security auditor
-│   ├── dashboard.py               # Real-time CISO SOC Web UI (:8080/dashboard)
+│   ├── dashboard.py               # Embedded CISO SOC Web UI (:8080/dashboard)
 │   ├── secrets_vault.py           # Ephemeral in-memory token lookup store
 │   └── airgap/                    # Local offline LLM configuration
-├── rawhuman_engine/               # Layer 0 / I/O Proof-of-Human Sentinel
+├── rawhuman_engine/               # Abuse Detection & Input Attribution Prototype
 │   ├── detector.py                # OS low-level hook inspector (Win32, Quartz, evdev)
 │   ├── biomechanics.py            # Kinematic Trajectory Dynamics (Curvature entropy & jitter)
 │   ├── server.py                  # Attestation daemon HTTP API (:8081)
 │   └── demo_cli.py                # Terminal visualizer for kinematic inspection
-├── recipes/                       # Audit-ready compliance recipes
-│   ├── RECIPE_MATRIX.md           # Configuration recipes for OpenAI, Anthropic, Cursor, etc.
-│   ├── enterprise_compliance.md   # Legal DPA addendum & Data Sovereignty policy
-│   └── developer_cheatsheet.md    # Developer setup cheat sheet
+├── recipes/                       # Compliance recipes & developer guides
 ├── tests/                         # Comprehensive unit, corpus & live integration tests
 │   ├── corpus/                    # Empirical evaluation datasets
-│   │   ├── secrets_leakage_corpus.json  # 22+ categorized secret leak test cases
-│   │   ├── synthetic_agent_corpus.json  # Agent vs human trajectory datasets
-│   │   └── adversarial_prompts_corpus.json # Adversarial evasion prompts
 │   ├── test_attack_corpus.py      # Automated corpus evaluation suite
-│   ├── test_redactor.py           # AST & format-preserving test suite
+│   ├── test_redactor.py           # AST & chunk-boundary streaming test suite
 │   ├── test_proxy.py              # Proxy endpoints & ZDR sanitization tests
 │   ├── test_rawhuman.py           # OS flags & kinematic dynamics tests
 │   ├── test_hitl_gateway.py       # Tool call execution gateway tests
@@ -287,29 +265,6 @@ python -m rawhuman_engine.demo_cli
 ```
 
 ---
-
-## 🧪 Testing & Verification
-
-Run the full automated test and benchmark suites locally:
-
-```bash
-# 1. Run unit and corpus evaluation tests (21 tests)
-pytest tests/ -v -k "not e2e"
-
-# 2. Run live container E2E integration tests (5 tests)
-pytest tests/test_e2e_live.py -v -s
-
-# 3. Execute latency & memory benchmark suite
-make bench
-```
-
----
-
-## 🤝 Community & Security Governance
-
-- **Security Advisories & Threat Model**: See [SECURITY.md](SECURITY.md).
-- **Contributing Guidelines**: See [CONTRIBUTING.md](CONTRIBUTING.md).
-- **Compliance & Legal Addenda**: See [recipes/enterprise_compliance.md](recipes/enterprise_compliance.md).
 
 ## 📄 License
 This project is licensed under the **Apache License 2.0** - see the [LICENSE](LICENSE) file for details.

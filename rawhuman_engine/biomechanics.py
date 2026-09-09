@@ -15,6 +15,14 @@ Evaluates spatial-temporal pointer movements against statistical kinematics:
    Physical USB HID controllers exhibit microsecond hardware oscillator drift.
 4. Cryptographic Hardware Fallback (TouchID / WebAuthn / FIDO2):
    Provides deterministic hardware attestation for accessibility and high-risk operations.
+
+Dataset Provenance & Research Prototype Scope:
+- Current evaluation models compare algorithmic automation patterns (PyAutoGUI linear interpolation,
+  cubic Bezier spline easing, discrete timer loops) against modeled human reaching trajectories
+  (bell-shaped velocity profiles with micro-correction entropy).
+- Open research challenges: Adaptive bots synthesizing artificial jitter, varying polling rates
+  across hardware (125Hz office vs 1000Hz gaming mice), and trackpad touch filtering.
+- Hardware cryptographic attestation (WebAuthn / TouchID) is provided as a zero-false-positive fallback.
 """
 
 from __future__ import annotations

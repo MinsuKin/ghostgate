@@ -71,7 +71,7 @@ On Linux systems:
 
 ## 🔐 Cryptographic & Data Retention Guarantees
 
-- **Zero Disk Persistence (ZDR):** GhostGate stores **zero** prompts, responses, or secret mappings on persistent storage. All synthetic shadowing dictionaries reside solely in RAM, scoped to the individual HTTP transaction, and are purged immediately after the stream closes.
+- **Application Memory Isolation & Zero Disk Persistence:** GhostGate itself does not persist prompts, responses, or secret mapping dictionaries to disk. All synthetic shadowing lookup tables reside strictly in ephemeral process RAM, scoped to the individual HTTP transaction lifecycle, and are purged upon stream closure. (Note: System administrators should ensure host OS swap encryption and container logging drivers are configured to prevent indirect OS-level logging).
 - **Format-Preserving Entropy Engine:** Shadows are generated using high-entropy random generation matching the exact entropy, length, and character space of the target credential (e.g. AWS `AKIA[0-9A-Z]{16}`).
 - **Local Air-Gap Isolation:** Sensitive prompts tagged with `# @airgap` or matching classification rules are routed to offline, containerized models (e.g., Ollama) with external network egress disabled.
 

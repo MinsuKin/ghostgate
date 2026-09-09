@@ -195,11 +195,25 @@ async def handle_proxy(path: str, request: Request):
                 async for chunk in upstream_resp.aiter_text():
                     buffer += chunk
                     if redaction_ctx.token_to_secret:
-                        rehydrated = proxy_state.redactor.rehydrate_text(buffer, redaction_ctx)
-                        yield rehydrated.encode("utf-8")
-                        buffer = ""
+                        emit_text, buffer = proxy_state.redactor.rehydrate_streaming_chunk(
+                            buffer, redaction_ctx, is_final=False
+                        )
+                        if emit_text:
+                            yield emit_text.encode("utf-8")
                     else:
-                        yield chunk.encode("utf-8")
+                        yield buffer.encode("utf-8")
+                        buffer = ""
+
+                # Flush any remaining buffer when stream concludes
+                if buffer:
+                    if redaction_ctx.token_to_secret:
+                        final_text, _ = proxy_state.redactor.rehydrate_streaming_chunk(
+                            buffer, redaction_ctx, is_final=True
+                        )
+                        if final_text:
+                            yield final_text.encode("utf-8")
+                    else:
+                        yield buffer.encode("utf-8")
             finally:
                 await upstream_resp.aclose()
 

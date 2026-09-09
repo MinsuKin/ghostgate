@@ -82,3 +82,69 @@ def test_payload_recursive_redaction():
 
     rehydrated_json = redactor.rehydrate_payload(redacted_json, ctx)
     assert rehydrated_json == payload
+
+
+def test_streaming_chunk_boundary_rehydration():
+    redactor = SecretRedactor(mode=MaskingMode.FORMAT_PRESERVING)
+    raw_text = "Deploy using AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE and DB=postgres://admin:pw123@db:5432/app"
+    redacted_text, ctx = redactor.redact_text(raw_text)
+
+    # Verify that secrets were masked
+    assert "AKIAIOSFODNN7EXAMPLE" not in redacted_text
+    assert "postgres://admin:pw123@db:5432/app" not in redacted_text
+
+    mock_aws_token = ctx.secret_to_token["AKIAIOSFODNN7EXAMPLE"]
+    mock_db_token = ctx.secret_to_token["postgres://admin:pw123@db:5432/app"]
+
+    # Scenario 1: AWS token split across exactly 2 chunks
+    split_idx = len("Deploy using AWS_ACCESS_KEY_ID=") + 8  # cuts halfway through mock_aws_token
+    chunk_1 = redacted_text[:split_idx]
+    chunk_2 = redacted_text[split_idx:]
+
+    emitted = []
+    buf = chunk_1
+    text1, buf = redactor.rehydrate_streaming_chunk(buf, ctx, is_final=False)
+    if text1:
+        emitted.append(text1)
+
+    buf += chunk_2
+    text2, buf = redactor.rehydrate_streaming_chunk(buf, ctx, is_final=False)
+    if text2:
+        emitted.append(text2)
+
+    if buf:
+        text_final, _ = redactor.rehydrate_streaming_chunk(buf, ctx, is_final=True)
+        if text_final:
+            emitted.append(text_final)
+
+    reconstructed = "".join(emitted)
+    assert reconstructed == raw_text, f"2-chunk split failed! Got: {reconstructed}"
+
+    # Scenario 2: Torture test - 1-byte streaming chunks (worst-case fragmentation)
+    emitted_single_char = []
+    buf = ""
+    for char in redacted_text:
+        buf += char
+        out, buf = redactor.rehydrate_streaming_chunk(buf, ctx, is_final=False)
+        if out:
+            emitted_single_char.append(out)
+
+    if buf:
+        final_out, _ = redactor.rehydrate_streaming_chunk(buf, ctx, is_final=True)
+        if final_out:
+            emitted_single_char.append(final_out)
+
+    reconstructed_single = "".join(emitted_single_char)
+    assert reconstructed_single == raw_text, f"1-byte stream torture test failed! Got: {reconstructed_single}"
+
+    # Scenario 3: Partial prefix that is NOT a real token
+    # e.g. text ending in 'AKIA' followed by non-token 'XYZ'
+    false_prefix_text = "Check this model AKIAXYZ test"
+    buf = "Check this model AKIA"
+    out1, buf = redactor.rehydrate_streaming_chunk(buf, ctx, is_final=False)
+    buf += "XYZ test"
+    out2, buf = redactor.rehydrate_streaming_chunk(buf, ctx, is_final=False)
+    final_out, _ = redactor.rehydrate_streaming_chunk(buf, ctx, is_final=True)
+    all_out = out1 + out2 + final_out
+    assert all_out == false_prefix_text
+

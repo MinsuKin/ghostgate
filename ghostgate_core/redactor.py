@@ -250,6 +250,57 @@ class SecretRedactor:
 
         return rehydrated
 
+    def rehydrate_streaming_chunk(
+        self,
+        buffer: str,
+        context: RedactionContext,
+        is_final: bool = False,
+    ) -> Tuple[str, str]:
+        """
+        Incrementally rehydrates a streaming buffer across arbitrary network chunk boundaries.
+        
+        If a synthetic surrogate token is sliced across chunks (e.g. 'AKIA1234' in chunk 1
+        and '567890123456' in chunk 2):
+        1. Fully formed surrogate tokens in buffer are restored to original secrets.
+        2. If is_final is False, inspects the tail of buffer (up to max_token_len - 1 chars).
+           If any suffix matches a prefix of an active surrogate token, retains that suffix
+           in the buffer and emits the preceding text.
+        3. If is_final is True, flushes the entire remaining buffer.
+        
+        Returns:
+            Tuple[str, str]: (text_to_emit, remaining_buffer)
+        """
+        if not buffer:
+            return "", ""
+
+        if not context.token_to_secret:
+            return buffer, ""
+
+        # 1. Restore any complete surrogate tokens present in the current buffer
+        rehydrated = self.rehydrate_text(buffer, context)
+
+        if is_final:
+            return rehydrated, ""
+
+        # 2. Check if the tail matches a prefix of any active surrogate token
+        active_tokens = list(context.token_to_secret.keys())
+        max_token_len = max(len(t) for t in active_tokens)
+
+        match_len = 0
+        search_window = min(len(rehydrated), max_token_len - 1)
+        for length in range(search_window, 0, -1):
+            tail = rehydrated[-length:]
+            if any(t.startswith(tail) for t in active_tokens):
+                match_len = length
+                break
+
+        if match_len > 0:
+            emit_text = rehydrated[:-match_len]
+            remaining_buffer = rehydrated[-match_len:]
+            return emit_text, remaining_buffer
+        else:
+            return rehydrated, ""
+
     def redact_payload(
         self,
         payload: Any,
