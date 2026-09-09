@@ -127,7 +127,7 @@ def render_dashboard_html() -> HTMLResponse:
     metrics = metrics_collector.get_metrics()
 
     html = f"""<!DOCTYPE html>
-<html lang="ko" class="dark">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -136,14 +136,14 @@ def render_dashboard_html() -> HTMLResponse:
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {{
       darkMode: 'class',
       theme: {{
         extend: {{
           fontFamily: {{
-            sans: ['"Plus Jakarta Sans"', '"Noto Sans KR"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           }},
           colors: {{
@@ -173,37 +173,36 @@ def render_dashboard_html() -> HTMLResponse:
             <span class="font-extrabold text-xl tracking-wider text-white">GHOSTGATE</span>
             <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-bold tracking-wide">ENTERPRISE AI SHIELD</span>
           </div>
-          <p class="text-[11px] text-slate-400 hidden sm:block" id="nav-tagline">Zero-Trust Bulletproof Glass Between Employees & Cloud AI</p>
+          <p class="text-[11px] text-slate-400 hidden sm:block">Zero-Trust Bulletproof Glass Between Employees & Cloud AI</p>
         </div>
       </div>
       
       <!-- Center Navigation Tabs -->
       <nav class="hidden lg:flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800/80 text-xs font-medium">
         <button onclick="switchTab('leak-defense')" id="tab-btn-leak-defense" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-bold transition shadow-sm">
-          ⚡ <span class="lang-text" data-en="⚡ AI Privacy Playground" data-ko="⚡ 실시간 기밀유출 방어 (Playground)">AI Privacy Playground</span>
+          ⚡ AI Privacy Playground
         </button>
         <button onclick="switchTab('agent-defense')" id="tab-btn-agent-defense" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition font-medium">
-          🤖 <span class="lang-text" data-en="AI Agent Hijack Defense" data-ko="자율 AI 탈취 방어">자율 AI 탈취 방어</span>
+          🤖 Rogue AI Agent Defense
         </button>
         <button onclick="switchTab('vc-pitch')" id="tab-btn-vc-pitch" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition font-medium">
-          📈 <span class="lang-text" data-en="VC Pitch & ROI" data-ko="투자 핵심 & 시장 기회">투자 핵심 & 시장 기회</span>
+          📈 VC Pitch & ROI Thesis
         </button>
         <button onclick="switchTab('soc-telemetry')" id="tab-btn-soc-telemetry" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition font-medium">
-          📊 <span class="lang-text" data-en="CISO Telemetry" data-ko="보안 관제 센터">보안 관제 센터</span>
+          📊 CISO SOC Telemetry
         </button>
         <button onclick="switchTab('api-specs')" id="tab-btn-api-specs" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition font-medium">
-          🔌 <span class="lang-text" data-en="Live API Docs" data-ko="API 사양서">API 사양서</span>
+          🔌 Live API Specs
         </button>
       </nav>
 
-      <!-- Right Action / Language Toggle -->
+      <!-- Right Action / Status -->
       <div class="flex items-center space-x-3 text-xs">
-        <!-- Bilingual Language Switcher -->
-        <button onclick="toggleLanguage()" id="lang-btn" class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg font-bold transition font-mono">
-          <span id="lang-flag">🇺🇸</span>
-          <span id="lang-label">English</span>
-        </button>
-        <a href="https://github.com/MinsuKin/ghostgate" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-lg font-bold transition">
+        <span class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[11px] font-bold">
+          <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          ZERO LEAK ACTIVE
+        </span>
+        <a href="https://github.com/MinsuKin/ghostgate" target="_blank" class="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-1.5 rounded-lg font-bold transition">
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           GitHub
         </a>
@@ -218,46 +217,38 @@ def render_dashboard_html() -> HTMLResponse:
         <div class="max-w-3xl">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold mb-3">
             <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="lang-text" data-en="PROTECTION ACTIVE • 0.14ms INLINE SPEED" data-ko="실시간 보호 가동 중 • 0.14ms 초저지연">PROTECTION ACTIVE • 0.14ms INLINE SPEED</span>
+            <span>PROTECTION ACTIVE • 0.14ms INLINE OVERHEAD</span>
           </div>
           <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
-            <span class="lang-text" 
-                  data-en="The Invisible Bulletproof Glass Between Enterprise Employees and Cloud AI." 
-                  data-ko="기업용 AI의 투명 방탄유리: 직원은 자유롭게, 기밀은 완벽하게.">
-              기업용 AI의 투명 방탄유리: 직원은 자유롭게, 기밀은 완벽하게.
-            </span>
+            The Invisible Bulletproof Glass Between Enterprise Employees and Cloud AI.
           </h1>
           <p class="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-            <span class="lang-text"
-                  data-en="When employees use ChatGPT or Claude, they accidentally paste database passwords, client emails, and AWS keys. GhostGate sits invisibly on the workstation, swaps real secrets with harmless fake replicas in 0.1 milliseconds before they leave the laptop, and seamlessly restores the real secrets when AI replies."
-                  data-ko="직원들이 ChatGPT나 Claude를 쓸 때 회사 DB 비밀번호, 고객 개인정보, AWS 클라우드 키를 무심코 붙여넣습니다. GhostGate는 0.1밀리초 만에 기밀을 무해한 가짜 데이터로 자동 바꿔치기하여 클라우드로 1바이트도 유출되지 않게 하고, AI가 답변을 주면 원래 비밀번호로 무손실 자동 복원합니다.">
-              직원들이 ChatGPT나 Claude를 쓸 때 회사 DB 비밀번호, 고객 개인정보, AWS 클라우드 키를 무심코 붙여넣습니다. GhostGate는 0.1밀리초 만에 기밀을 무해한 가짜 데이터로 자동 바꿔치기하여 클라우드로 1바이트도 유출되지 않게 하고, AI가 답변을 주면 원래 비밀번호로 무손실 자동 복원합니다.
-            </span>
+            When employees use ChatGPT or Claude, they accidentally paste database passwords, client emails, and AWS keys. GhostGate sits invisibly on the workstation, swaps real secrets with harmless fake replicas in 0.1 milliseconds before they leave the laptop, and seamlessly restores the real secrets when AI replies.
           </p>
         </div>
 
         <!-- 3-Step Visual Card for Zero-Background Investors -->
         <div class="w-full lg:w-auto bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
           <div class="text-[11px] font-bold uppercase tracking-wider text-indigo-400 font-mono mb-3">
-            <span class="lang-text" data-en="How GhostGate Works In 3 Steps" data-ko="GhostGate 3단계 작동 원리">GhostGate 3단계 작동 원리</span>
+            How GhostGate Works In 3 Steps
           </div>
           <div class="grid grid-cols-3 gap-3 text-center">
             <div class="bg-slate-950/80 p-3 rounded-xl border border-rose-500/30">
               <div class="text-rose-400 font-extrabold text-sm sm:text-base">1. 🚨 DANGER</div>
               <div class="text-[11px] text-slate-300 mt-1 font-medium">
-                <span class="lang-text" data-en="Employee pastes real DB password into AI" data-ko="직원이 실제 DB 비번을 AI에 입력">직원이 실제 DB 비번을 AI에 입력</span>
+                Employee pastes real DB password into AI
               </div>
             </div>
             <div class="bg-slate-950/80 p-3 rounded-xl border border-indigo-500/40">
               <div class="text-indigo-400 font-extrabold text-sm sm:text-base">2. ⚡ 0.14ms</div>
               <div class="text-[11px] text-slate-300 mt-1 font-medium">
-                <span class="lang-text" data-en="GhostGate swaps secret into fake token" data-ko="0.1밀리초 만에 가짜 데이터로 치환">0.1밀리초 만에 가짜 데이터로 치환</span>
+                GhostGate swaps secret into synthetic token
               </div>
             </div>
             <div class="bg-slate-950/80 p-3 rounded-xl border border-emerald-500/30">
               <div class="text-emerald-400 font-extrabold text-sm sm:text-base">3. 🛡️ ZERO LEAK</div>
               <div class="text-[11px] text-slate-300 mt-1 font-medium">
-                <span class="lang-text" data-en="OpenAI writes code; secrets stay 100% safe" data-ko="AI는 코드 완성, 기밀은 0바이트 유출">AI는 코드 완성, 기밀은 0바이트 유출</span>
+                OpenAI writes code; secrets stay 100% safe
               </div>
             </div>
           </div>
@@ -280,15 +271,11 @@ def render_dashboard_html() -> HTMLResponse:
             <div class="flex items-center gap-2">
               <span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-bold">INTERACTIVE DEMO</span>
               <h2 class="text-xl font-extrabold text-white">
-                <span class="lang-text" data-en="Test A Real-World Corporate Data Leak" data-ko="실제 기업 기밀 유출 상황을 직접 테스트해보세요">실제 기업 기밀 유출 상황을 직접 테스트해보세요</span>
+                Test A Real-World Corporate Data Leak
               </h2>
             </div>
             <p class="text-xs sm:text-sm text-slate-300 mt-1.5 max-w-3xl leading-relaxed">
-              <span class="lang-text"
-                    data-en="Choose an employee mistake below to see how GhostGate transparently intercepts credentials before they leave the laptop."
-                    data-ko="아래에서 직원이 흔히 저지르는 기밀 유출 시나리오를 선택하세요. GhostGate가 어떻게 외부 전송 직전 가짜 데이터로 안전하게 바꿔치기하는지 실시간으로 증명합니다.">
-                아래에서 직원이 흔히 저지르는 기밀 유출 시나리오를 선택하세요. GhostGate가 어떻게 외부 전송 직전 가짜 데이터로 안전하게 바꿔치기하는지 실시간으로 증명합니다.
-              </span>
+              Choose an employee mistake below to see how GhostGate transparently intercepts credentials before they leave the laptop.
             </p>
           </div>
           <div class="flex items-center gap-2 bg-slate-950/80 px-4 py-2 rounded-xl border border-slate-800 text-xs font-mono shrink-0">
@@ -299,24 +286,22 @@ def render_dashboard_html() -> HTMLResponse:
 
         <!-- Real-Life Scenario Buttons -->
         <div class="mt-5 pt-4 border-t border-slate-800/80 flex flex-wrap items-center gap-2.5">
-          <span class="text-xs text-slate-400 font-bold mr-1">
-            <span class="lang-text" data-en="Select Scenario:" data-ko="시나리오 선택:">시나리오 선택:</span>
-          </span>
+          <span class="text-xs text-slate-400 font-bold mr-1">Select Scenario:</span>
           <button onclick="loadScenario('postgres')" id="btn-scen-postgres" class="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3.5 py-2 rounded-xl text-cyan-300 font-bold transition flex items-center gap-2 shadow-sm">
             <span>🏢</span>
-            <span class="lang-text" data-en="Scenario 1: Payroll Database Password" data-ko="시나리오 1: 사내 급여 DB 비밀번호 유출">시나리오 1: 사내 급여 DB 비밀번호 유출</span>
+            <span>Scenario 1: Payroll Database Password</span>
           </button>
           <button onclick="loadScenario('aws')" id="btn-scen-aws" class="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3.5 py-2 rounded-xl text-indigo-300 font-bold transition flex items-center gap-2 shadow-sm">
             <span>☁️</span>
-            <span class="lang-text" data-en="Scenario 2: Cloud AWS Master Key" data-ko="시나리오 2: AWS 클라우드 마스터 키 유출">시나리오 2: AWS 클라우드 마스터 키 유출</span>
+            <span>Scenario 2: Cloud AWS Master Key</span>
           </button>
           <button onclick="loadScenario('pii')" id="btn-scen-pii" class="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3.5 py-2 rounded-xl text-purple-300 font-bold transition flex items-center gap-2 shadow-sm">
             <span>💳</span>
-            <span class="lang-text" data-en="Scenario 3: Customer Phone, Email & Token" data-ko="시나리오 3: 고객 개인정보 & 인증 토큰 유출">시나리오 3: 고객 개인정보 & 인증 토큰 유출</span>
+            <span>Scenario 3: Customer Phone, Email & Token</span>
           </button>
           <button onclick="loadScenario('airgap')" id="btn-scen-airgap" class="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3.5 py-2 rounded-xl text-amber-300 font-bold transition flex items-center gap-2 shadow-sm">
             <span>🔒</span>
-            <span class="lang-text" data-en="Scenario 4: Top-Secret Code (#@airgap)" data-ko="시나리오 4: 극비 국방/금융 알고리즘 (#@airgap)">시나리오 4: 극비 국방/금융 알고리즘 (#@airgap)</span>
+            <span>Scenario 4: Top-Secret IP (#@airgap)</span>
           </button>
         </div>
       </div>
@@ -330,29 +315,25 @@ def render_dashboard_html() -> HTMLResponse:
               <div class="flex items-center gap-2">
                 <span class="h-3 w-3 rounded-full bg-rose-500 animate-ping"></span>
                 <span class="text-xs font-extrabold uppercase tracking-wider text-rose-400 font-mono">
-                  <span class="lang-text" data-en="1. What Employee Typed (Laptop)" data-ko="1. 직원이 입력한 내용 (내부 노트북)">1. 직원이 입력한 내용 (내부 노트북)</span>
+                  1. What Employee Typed (Laptop)
                 </span>
               </div>
               <span class="text-[11px] font-bold px-2.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                <span class="lang-text" data-en="🚨 DANGER: REAL CREDENTIALS" data-ko="🚨 위험: 실제 회사 기밀 노출">🚨 위험: 실제 회사 기밀 노출</span>
+                🚨 DANGER: REAL CREDENTIALS
               </span>
             </div>
             <p class="text-xs text-slate-400 mb-2 leading-relaxed">
-              <span class="lang-text"
-                    data-en="Without GhostGate, these real database passwords and private keys are sent directly to public cloud servers."
-                    data-ko="GhostGate가 없다면 이 실제 비밀번호와 개인정보는 그대로 OpenAI 서버로 전송되어 영구 저장됩니다.">
-                GhostGate가 없다면 이 실제 비밀번호와 개인정보는 그대로 OpenAI 서버로 전송되어 영구 저장됩니다.
-              </span>
+              Without GhostGate, these real database passwords and private keys are sent directly to public cloud AI servers.
             </p>
             <textarea id="prompt-input" rows="8" class="w-full bg-[#070b14] border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-100 focus:outline-none focus:border-indigo-500 resize-none leading-relaxed" placeholder="Type code or secret here..."></textarea>
           </div>
           <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
             <span class="text-[11px] text-slate-400 font-mono">
-              <span class="lang-text" data-en="Protection: Format-Preserving Masking" data-ko="보호 방식: 포맷 보존 실시간 가명화">보호 방식: 포맷 보존 실시간 가명화</span>
+              Protection: Format-Preserving Masking
             </span>
             <button onclick="executeRedaction()" id="btn-redact" class="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-5 py-2.5 rounded-xl font-extrabold text-xs font-mono shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2">
               <span>⚡</span>
-              <span class="lang-text" data-en="Click to Protect & Shadow Secret" data-ko="클릭: 기밀 가명화 및 차단 실행">클릭: 기밀 가명화 및 차단 실행</span>
+              <span>Click to Protect & Shadow Secret</span>
             </button>
           </div>
         </div>
@@ -364,28 +345,24 @@ def render_dashboard_html() -> HTMLResponse:
               <div class="flex items-center gap-2">
                 <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
                 <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400 font-mono">
-                  <span class="lang-text" data-en="2. What Cloud AI Receives (Egress)" data-ko="2. OpenAI/Claude가 실제 전달받는 내용">2. OpenAI/Claude가 실제 전달받는 내용</span>
+                  2. What Cloud AI Receives (Egress)
                 </span>
               </div>
               <span id="shield-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                <span class="lang-text" data-en="🛡️ 100% SECURED (0 BYTES LEAKED)" data-ko="🛡️ 100% 안전 (기밀 0바이트 유출)">🛡️ 100% 안전 (기밀 0바이트 유출)</span>
+                🛡️ 100% SECURED (0 BYTES LEAKED)
               </span>
             </div>
             <p class="text-xs text-slate-400 mb-2 leading-relaxed">
-              <span class="lang-text"
-                    data-en="GhostGate replaced real secrets with synthetic dummy replicas. ChatGPT thinks it's real code and writes the solution perfectly."
-                    data-ko="GhostGate가 실제 기밀을 감쪽같은 가짜 데이터로 바꿨습니다. AI는 정상 코드로 인식하여 버그 없이 코드를 완성합니다.">
-                GhostGate가 실제 기밀을 감쪽같은 가짜 데이터로 바꿨습니다. AI는 정상 코드로 인식하여 버그 없이 코드를 완성합니다.
-              </span>
+              GhostGate replaced real secrets with synthetic dummy replicas. ChatGPT thinks it is real code and writes the solution perfectly.
             </p>
             <div id="redacted-output" class="w-full h-48 bg-[#070b14] border border-slate-800 rounded-xl p-3 text-xs font-mono text-emerald-400 overflow-y-auto whitespace-pre-wrap leading-relaxed">Click "Protect & Shadow Secret" on the left to see live protection...</div>
           </div>
           <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-xs flex flex-wrap items-center justify-between gap-2">
             <span class="text-slate-400">
-              <span class="lang-text" data-en="Lossless Recovery on Response:" data-ko="AI 답변 시 자동 복구:">AI 답변 시 자동 복구:</span>
+              Lossless Recovery on Response:
             </span>
             <span id="rehydrate-status" class="text-indigo-300 font-bold">
-              <span class="lang-text" data-en="In-Memory Rehydration: Real Data Restored on Laptop" data-ko="로컬 메모리 무손실 복원: 직원 화면엔 원본 표시">로컬 메모리 무손실 복원: 직원 화면엔 원본 표시</span>
+              In-Memory Rehydration: Real Data Restored on Laptop
             </span>
           </div>
         </div>
@@ -396,42 +373,30 @@ def render_dashboard_html() -> HTMLResponse:
         <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5">
           <div class="text-2xl mb-2">⚡</div>
           <h3 class="text-sm font-bold text-white">
-            <span class="lang-text" data-en="0.14ms Overhead (Invisible Speed)" data-ko="0.14ms 초저지연 (체감 지연 0)">0.14ms 초저지연 (체감 지연 0)</span>
+            0.14ms Overhead (Invisible Speed)
           </h3>
           <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-            <span class="lang-text"
-                  data-en="Human eyes take 100ms to blink. GhostGate processes security rules in 0.14ms. Developers feel zero lag in Cursor, VSCode, or web browsers."
-                  data-ko="인간의 눈 깜빡임(100ms)보다 700배 빠릅니다. 개발자는 Cursor나 브라우저에서 지연을 전혀 느끼지 못하고 코딩에 집중합니다.">
-              인간의 눈 깜빡임(100ms)보다 700배 빠릅니다. 개발자는 Cursor나 브라우저에서 지연을 전혀 느끼지 못하고 코딩에 집중합니다.
-            </span>
+            Human eyes take 100ms to blink. GhostGate processes security rules in 0.14ms. Developers feel zero lag in Cursor, VSCode, or web browsers.
           </p>
         </div>
 
         <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5">
           <div class="text-2xl mb-2">🧩</div>
           <h3 class="text-sm font-bold text-white">
-            <span class="lang-text" data-en="100% Code Integrity (No Broken AI)" data-ko="AI 코드 문법 보존 (에러 발생 제로)">AI 코드 문법 보존 (에러 발생 제로)</span>
+            100% Code Integrity (No Broken AI)
           </h3>
           <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-            <span class="lang-text"
-                  data-en="Dumb DLP tools replace text with '[REDACTED]', which breaks Python syntax and causes AI hallucination. GhostGate generates syntax-valid dummy tokens."
-                  data-ko="기존 보안 툴처럼 [삭제됨]으로 가리면 AI가 문법 오류를 일으킵니다. GhostGate는 실제와 동일한 자릿수의 가짜 토큰을 만들어 AI가 완벽한 코드를 작성합니다.">
-              기존 보안 툴처럼 [삭제됨]으로 가리면 AI가 문법 오류를 일으킵니다. GhostGate는 실제와 동일한 자릿수의 가짜 토큰을 만들어 AI가 완벽한 코드를 작성합니다.
-            </span>
+            Dumb DLP tools replace text with '[REDACTED]', which breaks Python syntax and causes AI hallucination. GhostGate generates syntax-valid dummy tokens.
           </p>
         </div>
 
         <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5">
           <div class="text-2xl mb-2">🔄</div>
           <h3 class="text-sm font-bold text-white">
-            <span class="lang-text" data-en="Zero-Friction In-Memory Rehydration" data-ko="쌍방향 무손실 복원 (Rehydration)">쌍방향 무손실 복원 (Rehydration)</span>
+            Zero-Friction In-Memory Rehydration
           </h3>
           <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-            <span class="lang-text"
-                  data-en="When ChatGPT responds with refactored code, GhostGate swaps the fake tokens back to real secrets locally. The developer never has to copy-paste passwords."
-                  data-ko="ChatGPT가 완성된 코드를 보내주면, GhostGate가 로컬 메모리에서 가짜 데이터를 진짜 비밀번호로 자동 복구해 주므로 직원은 일체의 수작업이 필요 없습니다.">
-              ChatGPT가 완성된 코드를 보내주면, GhostGate가 로컬 메모리에서 가짜 데이터를 진짜 비밀번호로 자동 복구해 주므로 직원은 일체의 수작업이 필요 없습니다.
-            </span>
+            When ChatGPT responds with refactored code, GhostGate swaps the fake tokens back to real secrets locally. The developer never has to copy-paste passwords.
           </p>
         </div>
       </div>
@@ -445,21 +410,13 @@ def render_dashboard_html() -> HTMLResponse:
         <div class="max-w-3xl">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-bold mb-3">
             <span>🚨</span>
-            <span class="lang-text" data-en="THE $50B EMERGING THREAT: ROGUE AGENT HIJACK" data-ko="차세대 보안 위협: 자율 AI 에이전트 탈취">THE $50B EMERGING THREAT: ROGUE AGENT HIJACK</span>
+            <span>THE $50B EMERGING THREAT: ROGUE AGENT HIJACK</span>
           </div>
           <h2 class="text-2xl font-extrabold text-white">
-            <span class="lang-text" 
-                  data-en="What Happens When An AI Agent Takes Control of Your Mouse & Keyboard?" 
-                  data-ko="AI 에이전트가 직원의 마우스와 키보드를 직접 조작할 때, 어떻게 통제할 것인가?">
-              AI 에이전트가 직원의 마우스와 키보드를 직접 조작할 때, 어떻게 통제할 것인가?
-            </span>
+            What Happens When An AI Agent Takes Control of Your Mouse & Keyboard?
           </h2>
           <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
-            <span class="lang-text"
-                  data-en="New autonomous agents (Anthropic Computer Use, OpenAI Operator) can physically control employee laptops. But what if a malicious website tricks an AI agent via prompt injection into clicking 'Transfer $1,000,000' or wiping your enterprise database? GhostGate RawHuman™ inspects physical motor kinematics to physically block unauthorized AI bot clicks."
-                  data-ko="Anthropic Computer Use, OpenAI Operator처럼 사람 대신 마우스와 키보드를 움직이는 자율 AI 에이전트가 확산되고 있습니다. 만약 해커의 프롬프트 주입 공격을 받은 AI 에이전트가 직원 동의 없이 거액을 송금하거나 기업 DB를 삭제하려 한다면? GhostGate RawHuman™은 인간의 미세 손떨림과 생체역학 곡률을 감지하여 불법 AI 봇 조작을 0.002초 만에 물리 차단합니다.">
-              Anthropic Computer Use, OpenAI Operator처럼 사람 대신 마우스와 키보드를 움직이는 자율 AI 에이전트가 확산되고 있습니다. 만약 해커의 프롬프트 주입 공격을 받은 AI 에이전트가 직원 동의 없이 거액을 송금하거나 기업 DB를 삭제하려 한다면? GhostGate RawHuman™은 인간의 미세 손떨림과 생체역학 곡률을 감지하여 불법 AI 봇 조작을 0.002초 만에 물리 차단합니다.
-            </span>
+            New autonomous agents (Anthropic Computer Use, OpenAI Operator) can physically control employee laptops. But what if a malicious website tricks an AI agent via prompt injection into clicking 'Transfer $1,000,000' or wiping your enterprise database? GhostGate RawHuman™ inspects physical motor kinematics to physically block unauthorized AI bot clicks.
           </p>
         </div>
 
@@ -467,11 +424,11 @@ def render_dashboard_html() -> HTMLResponse:
         <div class="mt-6 flex flex-wrap items-center gap-3">
           <button onclick="runAgentDemo('agent')" id="btn-scenario-agent" class="bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-lg shadow-rose-600/30 transition flex items-center gap-2">
             <span>🤖</span>
-            <span class="lang-text" data-en="Simulate Rogue AI Agent Click (SendInput Bot)" data-ko="해킹된 AI 에이전트 조작 시뮬레이션 (봇 클릭)">해킹된 AI 에이전트 조작 시뮬레이션 (봇 클릭)</span>
+            <span>Simulate Rogue AI Agent Click (SendInput Bot)</span>
           </button>
           <button onclick="runAgentDemo('human')" id="btn-scenario-human" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-2">
             <span>👤</span>
-            <span class="lang-text" data-en="Simulate Real Human Employee (Physical Mouse)" data-ko="실제 인간 직원 조작 시뮬레이션 (인간 마우스)">실제 인간 직원 조작 시뮬레이션 (인간 마우스)</span>
+            <span>Simulate Real Human Employee (Physical Mouse)</span>
           </button>
         </div>
       </div>
@@ -479,7 +436,7 @@ def render_dashboard_html() -> HTMLResponse:
       <!-- Verdict Banner & Scorecard -->
       <div id="raw-verdict-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 font-mono text-xs space-y-2 shadow-lg">
         <div class="text-slate-400">
-          <span class="lang-text" data-en="Select an action above to test RawHuman I/O Gate attestation." data-ko="위 버튼을 클릭하여 자율 AI 차단 시뮬레이션을 실행하세요.">위 버튼을 클릭하여 자율 AI 차단 시뮬레이션을 실행하세요.</span>
+          Select an action above to test RawHuman I/O Gate attestation.
         </div>
       </div>
 
@@ -487,31 +444,31 @@ def render_dashboard_html() -> HTMLResponse:
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
           <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-            <span class="lang-text" data-en="OS Kernel Injection Hook" data-ko="OS 커널 인젝션 감지">OS 커널 인젝션 감지</span>
+            OS Kernel Injection Hook
           </div>
           <div id="raw-os-flag" class="text-xl font-extrabold font-mono text-white mt-2">Ready...</div>
           <div class="text-xs text-slate-400 mt-1">
-            <span class="lang-text" data-en="Detects programmatic PyAutoGUI / SendInput" data-ko="프로그래밍 방식 가상 마우스 주입 감시">Detects programmatic PyAutoGUI / SendInput</span>
+            Detects programmatic PyAutoGUI / SendInput
           </div>
         </div>
 
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
           <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-            <span class="lang-text" data-en="Hand Kinematic Curvature" data-ko="손 생체역학적 곡률 엔트로피">손 생체역학적 곡률 엔트로피</span>
+            Hand Kinematic Curvature
           </div>
           <div id="raw-entropy" class="text-xl font-extrabold font-mono text-white mt-2">-</div>
           <div class="text-xs text-slate-400 mt-1">
-            <span class="lang-text" data-en="Humans move with curves; bots move in straight lines" data-ko="인간은 곡선으로, AI 봇은 수학적 직선으로 이동">인간은 곡선으로, AI 봇은 수학적 직선으로 이동</span>
+            Humans move with curves; bots move in straight lines
           </div>
         </div>
 
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
           <div class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-            <span class="lang-text" data-en="Micro-Timing Jitter" data-ko="생체 마이크로 타이밍 지터">생체 마이크로 타이밍 지터</span>
+            Micro-Timing Jitter
           </div>
           <div id="raw-jitter" class="text-xl font-extrabold font-mono text-white mt-2">-</div>
           <div class="text-xs text-slate-400 mt-1">
-            <span class="lang-text" data-en="Human muscle tremor vs instant 0ms bot clicks" data-ko="인간 근육의 자연 미세 떨림 확인">인간 근육의 자연 미세 떨림 확인</span>
+            Human muscle tremor vs instant 0ms bot clicks
           </div>
         </div>
       </div>
@@ -525,21 +482,13 @@ def render_dashboard_html() -> HTMLResponse:
       <div class="bg-gradient-to-r from-indigo-950/70 via-slate-900 to-purple-950/50 border border-indigo-500/30 rounded-2xl p-6 sm:p-8 shadow-xl">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-mono font-bold mb-4">
           <span>📈</span>
-          <span class="lang-text" data-en="THE $45B ENTERPRISE AI OPPORTUNITY" data-ko="450억 달러 엔터프라이즈 AI 보안 시장">THE $45B ENTERPRISE AI OPPORTUNITY</span>
+          <span>THE $45B ENTERPRISE AI OPPORTUNITY</span>
         </div>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-white leading-snug">
-          <span class="lang-text" 
-                data-en="Why GhostGate Is The Critical Missing Layer in Enterprise AI Adoption." 
-                data-ko="왜 GhostGate가 포춘 500대 기업의 생성형 AI 도입에 필수 불가결한가?">
-            왜 GhostGate가 포춘 500대 기업의 생성형 AI 도입에 필수 불가결한가?
-          </span>
+          Why GhostGate Is The Critical Missing Layer in Enterprise AI Adoption.
         </h2>
         <p class="text-sm sm:text-base text-slate-300 mt-3 leading-relaxed max-w-4xl">
-          <span class="lang-text"
-                data-en="78% of Fortune 500 CISOs currently restrict or ban generative AI tools because of data breach liability and intellectual property theft. GhostGate solves this at the endpoint: employees get 100% productivity, while the enterprise gets mathematical zero-leak guarantees."
-                data-ko="현재 포춘 500대 기업 CISO의 78%가 데이터 유출 법적 책임 및 지적 재산권 도난 우려로 사내 생성형 AI 사용을 제한하거나 금지하고 있습니다. GhostGate는 직원 단말에서 이 문제를 완벽히 해결합니다. 직원은 AI 생산성을 100% 누리고, 기업은 0바이트 유출 무결성을 보장받습니다.">
-            현재 포춘 500대 기업 CISO의 78%가 데이터 유출 법적 책임 및 지적 재산권 도난 우려로 사내 생성형 AI 사용을 제한하거나 금지하고 있습니다. GhostGate는 직원 단말에서 이 문제를 완벽히 해결합니다. 직원은 AI 생산성을 100% 누리고, 기업은 0바이트 유출 무결성을 보장받습니다.
-          </span>
+          78% of Fortune 500 CISOs currently restrict or ban generative AI tools because of data breach liability and intellectual property theft. GhostGate solves this at the endpoint: employees get 100% productivity, while the enterprise gets mathematical zero-leak guarantees.
         </p>
 
         <!-- 3 Core Competitive Moats -->
@@ -547,19 +496,19 @@ def render_dashboard_html() -> HTMLResponse:
           <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
             <div class="text-indigo-400 font-extrabold text-base">1. Zero Friction Proxy</div>
             <div class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-              <span class="lang-text" data-en="No code modification, no complex SDK. Works seamlessly across Mac, Windows, and Linux workstations." data-ko="코드 수정이나 복잡한 SDK 설치 불필요. 투명 프록시로 전사 배포 즉시 활성화.">코드 수정이나 복잡한 SDK 설치 불필요. 투명 프록시로 전사 배포 즉시 활성화.</span>
+              No code modification, no complex SDK. Works seamlessly across Mac, Windows, and Linux workstations.
             </div>
           </div>
           <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
             <div class="text-purple-400 font-extrabold text-base">2. Format-Preserving AST</div>
             <div class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-              <span class="lang-text" data-en="Proprietary synthetic shadow tokenization that keeps code syntax valid and eliminates LLM hallucinations." data-ko="독점적 포맷 보존 가명화 기술로 코드 문법을 유지해 AI 환각 및 에러 원천 방지.">독점적 포맷 보존 가명화 기술로 코드 문법을 유지해 AI 환각 및 에러 원천 방지.</span>
+              Proprietary synthetic shadow tokenization that keeps code syntax valid and eliminates LLM hallucinations.
             </div>
           </div>
           <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
             <div class="text-cyan-400 font-extrabold text-base">3. RawHuman Agent Barrier</div>
             <div class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-              <span class="lang-text" data-en="The world's first hardware/kinematic layer blocking rogue autonomous AI agents from hijacking employee PCs." data-ko="자율 AI 에이전트의 불법 PC 조작을 막는 세계 최초의 하드웨어 생체역학 방어선.">자율 AI 에이전트의 불법 PC 조작을 막는 세계 최초의 하드웨어 생체역학 방어선.</span>
+              The world's first hardware/kinematic layer blocking rogue autonomous AI agents from hijacking employee PCs.
             </div>
           </div>
         </div>
@@ -569,7 +518,7 @@ def render_dashboard_html() -> HTMLResponse:
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <div class="text-xs text-slate-400 uppercase font-mono font-bold">
-            <span class="lang-text" data-en="Enterprise ROI (Avoided Breaches)" data-ko="예방된 기업 잠재 손실">예방된 기업 잠재 손실</span>
+            Enterprise ROI (Avoided Breaches)
           </div>
           <div class="text-3xl font-extrabold text-emerald-400 mt-2 font-mono">$8.2M+</div>
           <div class="text-xs text-slate-400 mt-1">Based on IBM $4.45M avg breach cost</div>
@@ -577,7 +526,7 @@ def render_dashboard_html() -> HTMLResponse:
 
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <div class="text-xs text-slate-400 uppercase font-mono font-bold">
-            <span class="lang-text" data-en="Total Prompts Inspected" data-ko="총 검사된 사내 프롬프트">총 검사된 사내 프롬프트</span>
+            Total Prompts Inspected
           </div>
           <div class="text-3xl font-extrabold text-white mt-2 font-mono">{metrics['total_requests']:,}</div>
           <div class="text-xs text-emerald-400 mt-1">100% Zero Cloud Leak</div>
@@ -585,7 +534,7 @@ def render_dashboard_html() -> HTMLResponse:
 
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <div class="text-xs text-slate-400 uppercase font-mono font-bold">
-            <span class="lang-text" data-en="Secrets & PII Masked" data-ko="실시간 마스킹된 기밀/개인정보">실시간 마스킹된 기밀/개인정보</span>
+            Secrets & PII Masked
           </div>
           <div class="text-3xl font-extrabold text-cyan-400 mt-2 font-mono">{metrics['total_secrets_masked']:,}</div>
           <div class="text-xs text-slate-400 mt-1">Passwords, Keys, DB Strings</div>
@@ -593,7 +542,7 @@ def render_dashboard_html() -> HTMLResponse:
 
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <div class="text-xs text-slate-400 uppercase font-mono font-bold">
-            <span class="lang-text" data-en="Agent Takeovers Blocked" data-ko="차단된 불법 AI 에이전트 조작">차단된 불법 AI 에이전트 조작</span>
+            Agent Takeovers Blocked
           </div>
           <div class="text-3xl font-extrabold text-rose-400 mt-2 font-mono">{metrics['total_agent_hijacks_blocked']:,}</div>
           <div class="text-xs text-rose-400 mt-1">0.002s I/O Gate Lockouts</div>
@@ -609,7 +558,7 @@ def render_dashboard_html() -> HTMLResponse:
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <h3 class="text-sm font-bold text-white mb-4 flex items-center justify-between">
-            <span class="lang-text" data-en="Intercepted Secret Distribution" data-ko="유출 차단된 기밀 유형별 분포">유출 차단된 기밀 유형별 분포</span>
+            <span>Intercepted Secret Distribution</span>
             <span class="text-xs font-mono text-indigo-400">Live SIEM</span>
           </h3>
           <div class="h-64 flex items-center justify-center">
@@ -619,7 +568,7 @@ def render_dashboard_html() -> HTMLResponse:
 
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <h3 class="text-sm font-bold text-white mb-4 flex items-center justify-between">
-            <span class="lang-text" data-en="RawHuman Attestation Telemetry" data-ko="자율 AI vs 인간 마우스 검증 통계">자율 AI vs 인간 마우스 검증 통계</span>
+            <span>RawHuman Attestation Telemetry</span>
             <span class="text-xs font-mono text-cyan-400">Layer 0 HID</span>
           </h3>
           <div class="h-64 flex items-center justify-center">
@@ -633,10 +582,10 @@ def render_dashboard_html() -> HTMLResponse:
         <div class="p-5 border-b border-slate-800 flex justify-between items-center">
           <div>
             <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">
-              <span class="lang-text" data-en="Real-Time Security Event Audit Stream" data-ko="실시간 기업 보안 이벤트 감사 로그">실시간 기업 보안 이벤트 감사 로그</span>
+              Real-Time Security Event Audit Stream
             </h3>
             <p class="text-xs text-slate-400 mt-0.5">
-              <span class="lang-text" data-en="Live tail from enterprise endpoints and agent sentinel" data-ko="사내 개발자 엔드포인트 및 AI 에이전트 센티넬 실시간 피드">사내 개발자 엔드포인트 및 AI 에이전트 센티넬 실시간 피드</span>
+              Live tail from enterprise endpoints and agent sentinel
             </p>
           </div>
           <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 font-bold">● LIVE STREAM</span>
@@ -688,14 +637,10 @@ def render_dashboard_html() -> HTMLResponse:
     <div id="tab-api-specs" class="hidden space-y-6">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
         <h3 class="text-base font-extrabold text-white uppercase tracking-wider font-mono">
-          <span class="lang-text" data-en="Technical Specifications & Live Swagger Endpoints" data-ko="기술 사양서 및 인터랙티브 API 문서">기술 사양서 및 인터랙티브 API 문서</span>
+          Technical Specifications & Live Swagger Endpoints
         </h3>
         <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl leading-relaxed">
-          <span class="lang-text"
-                data-en="For technical auditors and security architects: GhostGate operates as an ultra-fast RFC-compliant reverse proxy. Test the live endpoints directly in your browser:"
-                data-ko="기술 실사역 및 보안 아키텍트를 위한 엔드포인트: GhostGate는 초저지연 표준 리버스 프록시로 동작합니다. 브라우저에서 직접 테스트할 수 있습니다:">
-            기술 실사역 및 보안 아키텍트를 위한 엔드포인트: GhostGate는 초저지연 표준 리버스 프록시로 동작합니다. 브라우저에서 직접 테스트할 수 있습니다:
-          </span>
+          For technical auditors and security architects: GhostGate operates as an ultra-fast RFC-compliant reverse proxy. Test the live endpoints directly in your browser:
         </p>
 
         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-5 font-mono text-xs">
@@ -732,32 +677,6 @@ def render_dashboard_html() -> HTMLResponse:
   </main>
 
   <script>
-    // Current Language State (Default: ko, with 1-click toggle to en)
-    let currentLang = 'ko';
-
-    function setLanguage(lang) {
-      currentLang = lang;
-      document.querySelectorAll('.lang-text').forEach(el => {
-        const text = el.getAttribute('data-' + lang);
-        if (text) {
-          el.textContent = text;
-        }
-      });
-      const flag = document.getElementById('lang-flag');
-      const label = document.getElementById('lang-label');
-      if (lang === 'ko') {
-        flag.textContent = '🇺🇸';
-        label.textContent = 'English';
-      } else {
-        flag.textContent = '🇰🇷';
-        label.textContent = '한국어';
-      }
-    }
-
-    function toggleLanguage() {
-      setLanguage(currentLang === 'ko' ? 'en' : 'ko');
-    }
-
     // Tab Switching Logic
     function switchTab(tabName) {
       const tabs = ['leak-defense', 'agent-defense', 'vc-pitch', 'soc-telemetry', 'api-specs'];
@@ -785,19 +704,24 @@ def render_dashboard_html() -> HTMLResponse:
 
     // Demo Scenarios for Zero-Background Investors
     // Note: Broken up strings prevent static regex scanners (e.g. GitGuardian) from false-positives
-    const scenarios = {
-      postgres: (
-        'DATABASE_URL="' +
-        'p' + 'ostgres://' +
-        'demo_admin' + ':' + 'mock_pass_placeholder' +
-        '@prod-db.internal.corp:5432/finance_db"\n' +
-        'engine = create_engine(DATABASE_URL)\n' +
-        'with engine.connect() as conn:\n' +
-        '    conn.execute("SELECT * FROM payroll_records")'
-      ),
-      aws: 'import boto3\n# Initialize production S3 client\nclient = boto3.client(\n    "s3",\n    aws_access_key_id="AKIAIOSFODNN7EXAMPLE",\n    aws_secret_access_key="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"\n)\nresponse = client.list_buckets()',
-      pii: 'Customer security escalation: user minsu.security@internal-corp.io reported suspicious login.\nPhone on file: +1-415-555-0199.\nSession token: Bearer GHOSTGATE_DEMO_BEARER_TOKEN_AUTH_99881122',
-      airgap: '# @airgap\n# CLASSIFIED: Next-generation quantum encryption key exchange algorithm\ndef proprietary_key_exchange(secret_seed):\n    # Must never touch external cloud LLM servers\n    return hash_matrix(secret_seed)'
+        const scenarios = {
+      postgres: `DATABASE_URL="` + `p` + `ostgres://` + `demo_admin` + `:` + `mock_pass_placeholder` + `@prod-db.internal.corp:5432/finance_db"\nengine = create_engine(DATABASE_URL)\nwith engine.connect() as conn:\n    conn.execute("SELECT * FROM payroll_records")`,
+      aws: `import boto3
+# Initialize production S3 client
+client = boto3.client(
+    "s3",
+    aws_access_key_id="AKIAIOSFODNN7EXAMPLE",
+    aws_secret_access_key="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+)
+response = client.list_buckets()`,
+      pii: `Customer security escalation: user minsu.security@internal-corp.io reported suspicious login.
+Phone on file: +1-415-555-0199.
+Session token: Bearer GHOSTGATE_DEMO_BEARER_TOKEN_AUTH_99881122`,
+      airgap: `# @airgap
+# CLASSIFIED: Next-generation quantum encryption key exchange algorithm
+def proprietary_key_exchange(secret_seed):
+    # Must never touch external cloud LLM servers
+    return hash_matrix(secret_seed)`
     };
 
     function loadScenario(name) {
@@ -827,18 +751,18 @@ def render_dashboard_html() -> HTMLResponse:
         document.getElementById('latency-badge').textContent = data.latency_ms + ' ms';
         
         if (data.is_airgap) {
-          document.getElementById('shield-badge').textContent = currentLang === 'ko' ? '🔒 오프라인 로컬 OLLAMA로 격리 라우팅' : 'AIR-GAPPED TO LOCAL OLLAMA';
+          document.getElementById('shield-badge').textContent = 'AIR-GAPPED TO LOCAL OLLAMA';
           document.getElementById('shield-badge').className = 'text-[11px] font-bold px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30';
-          document.getElementById('rehydrate-status').textContent = currentLang === 'ko' ? '100% 오프라인 온프레미스 연산 (외부 클라우드 전송 0)' : '100% Offline Local Model Processing';
+          document.getElementById('rehydrate-status').textContent = '100% Offline Local Model Processing';
         } else {
-          document.getElementById('shield-badge').textContent = currentLang === 'ko' ? ('🛡️ 100% 안전 (' + data.redaction_count + '개 기밀 가명화 완료)') : ('SECURED (' + data.redaction_count + ' TOKENS SHADOWED)');
+          document.getElementById('shield-badge').textContent = 'SECURED (' + data.redaction_count + ' TOKENS SHADOWED)';
           document.getElementById('shield-badge').className = 'text-[11px] font-bold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-          document.getElementById('rehydrate-status').textContent = currentLang === 'ko' ? '로컬 메모리 무손실 복원: 직원 화면엔 원본 표시' : 'In-Memory Rehydration: Match Guaranteed';
+          document.getElementById('rehydrate-status').textContent = 'In-Memory Rehydration: Match Guaranteed';
         }
       } catch (err) {
         console.error(err);
       } finally {
-        btn.innerHTML = '<span>⚡</span> <span>' + (currentLang === 'ko' ? '기밀 가명화 및 차단 실행' : 'Click to Protect & Shadow Secret') + '</span>';
+        btn.innerHTML = '<span>⚡</span> <span>Click to Protect & Shadow Secret</span>';
       }
     }
 
@@ -866,18 +790,18 @@ def render_dashboard_html() -> HTMLResponse:
         vBox.innerHTML = `
           <div class="text-rose-400 font-extrabold text-sm sm:text-base flex items-center gap-2">
             <span>🚨</span>
-            <span>${currentLang === 'ko' ? '불법 자율 AI 에이전트 인젝션 감지 및 물리 차단 완료' : 'AUTONOMOUS AI AGENT HIJACK DETECTED & KILLED'}</span>
+            <span>AUTONOMOUS AI AGENT HIJACK DETECTED & KILLED</span>
           </div>
           <div class="text-slate-200">
-            ${currentLang === 'ko' ? '인간 신뢰도 점수:' : 'Human Confidence Score:'} 
-            <span class="text-rose-400 font-extrabold">${(res.human_confidence * 100).toFixed(1)}% (기준 미달)</span>
+            Human Confidence Score: 
+            <span class="text-rose-400 font-extrabold">${(res.human_confidence * 100).toFixed(1)}% (Below 60% Threshold)</span>
           </div>
           <div class="text-slate-400">
-            ${currentLang === 'ko' ? '차단 사유:' : 'Threat Details:'} 
+            Threat Details: 
             ${res.rejection_reasons.join(' • ')}
           </div>
           <div class="text-rose-300 font-bold mt-2 bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20">
-            ${currentLang === 'ko' ? '🛡️ 조치 결과: 0.002초 만에 단말 I/O 게이트 락 잠금 (클릭 실행 전 원천 무력화)' : res.action_taken}
+            🛡️ Action Taken: Terminated process & locked I/O bus in 0.002s before click execution
           </div>
         `;
       } else {
@@ -885,17 +809,17 @@ def render_dashboard_html() -> HTMLResponse:
         vBox.innerHTML = `
           <div class="text-emerald-400 font-extrabold text-sm sm:text-base flex items-center gap-2">
             <span>✅</span>
-            <span>${currentLang === 'ko' ? '실제 생체 인간 조작자 인증 완료 (정상 승인)' : 'AUTHENTIC HUMAN OPERATOR VERIFIED'}</span>
+            <span>AUTHENTIC HUMAN OPERATOR VERIFIED</span>
           </div>
           <div class="text-slate-200">
-            ${currentLang === 'ko' ? '인간 신뢰도 점수:' : 'Human Confidence Score:'} 
-            <span class="text-emerald-400 font-extrabold">${(res.human_confidence * 100).toFixed(1)}% (생체역학 곡률 정상)</span>
+            Human Confidence Score: 
+            <span class="text-emerald-400 font-extrabold">${(res.human_confidence * 100).toFixed(1)}% (Natural Kinematic Curvature)</span>
           </div>
           <div class="text-slate-400">
-            ${currentLang === 'ko' ? '신호 원점: 물리 하드웨어 USB 마우스 (자연 손떨림 및 가속도 확인)' : 'Origin: Physical Hardware HID Controller (Organic micro-tremors confirmed)'}
+            Origin: Physical Hardware HID Controller (Organic micro-tremors confirmed)
           </div>
           <div class="text-emerald-300 font-bold mt-2 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
-            ${currentLang === 'ko' ? 'Attestation ID: rawhuman_attest_9f83a8b2 • 직원의 마우스 조작이 정상 허가되었습니다.' : 'Attestation ID: rawhuman_attest_9f83a8b2 • Action Permitted'}
+            Attestation ID: rawhuman_attest_9f83a8b2 • Action Permitted
           </div>
         `;
       }
@@ -958,4 +882,9 @@ def render_dashboard_html() -> HTMLResponse:
 </body>
 </html>
 """
-    return HTMLResponse(content=html, status_code=200)
+    headers = {
+        "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+        "Pragma": "no-cache",
+        "Expires": "0",
+    }
+    return HTMLResponse(content=html, status_code=200, headers=headers)
